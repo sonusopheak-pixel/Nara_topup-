@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ហាងបញ្ចូលពេជ្រ - Top-Up Store</title>
+  <style>
+    body { font-family: 'Khmer OS Battambang', sans-serif; background-color: #f0f2f5; padding: 20px; margin: 0; }
+    .container { max-width: 480px; background: #ffffff; padding: 25px; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #1a73e8; margin-top: 0; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 6px; font-weight: bold; color: #333; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #cccccc; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
+    
+    /* QR Code Payment Section Style */
+    .qr-card { text-align: center; background: #f8f9fa; border: 2px dashed #007bff; border-radius: 10px; padding: 15px; margin: 20px 0; }
+    .qr-card img { max-width: 200px; height: auto; border-radius: 8px; border: 1px solid #ddd; }
+    .qr-card p { margin: 8px 0 0 0; font-size: 14px; font-weight: bold; color: #333; }
+    
+    button { width: 100%; padding: 14px; background-color: #28a745; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    button:hover { background-color: #218838; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>💎 បញ្ចូលពេជ្រ Free Fire & MLBB</h2>
+  
+  <form id="topupForm">
+    <div class="form-group">
+      <label>ជ្រើសរើសហ្គេម</label>
+      <select id="game" onchange="toggleZoneInput()">
+        <option value="Free Fire">Free Fire</option>
+        <option value="Mobile Legends">Mobile Legends</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Player ID</label>
+      <input type="text" id="playerId" placeholder="បញ្ចូល Player ID" required>
+    </div>
+
+    <div class="form-group" id="zoneGroup" style="display: none;">
+      <label>Zone ID (សម្រាប់ MLBB)</label>
+      <input type="text" id="zoneId" placeholder="បញ្ចូល Zone ID">
+    </div>
+
+    <div class="form-group">
+      <label>ជ្រើសរើសកញ្ចប់ពេជ្រ</label>
+      <select id="item">
+        <option value="100 Diamonds - $1.00">100 Diamonds - $1.00</option>
+        <option value="500 Diamonds - $5.00">500 Diamonds - $5.00</option>
+        <option value="1000 Diamonds - $10.00">1000 Diamonds - $10.00</option>
+      </select>
+    </div>
+
+    <!-- ផ្នែក QR Code សម្រាប់បង់ប្រាក់ -->
+    <div class="qr-card">
+      <label style="color: #007bff;">📲 Scan ដើម្បីបង់ប្រាក់ (KHQR / ABA)</label>
+      <!-- ⚠️ ជំនួស URL រូបភាព QR Code របស់អ្នកនៅត្រង់ src នេះ -->
+      <img src="https://via.placeholder.com/200x200.png?text=Your+KHQR+Code" alt="KHQR Payment">
+      <p>ឈ្មោះគណនី: YOUR ACCOUNT NAME</p>
+    </div>
+
+    <div class="form-group">
+      <label>លេខទូរស័ព្ទ ឬ លេខប្រតិបត្តិការបង់ប្រាក់ (TID)</label>
+      <input type="text" id="phone" placeholder="បញ្ចូលលេខទូរស័ព្ទ / ABA Transaction ID" required>
+    </div>
+
+    <button type="submit" id="submitBtn">ផ្ញើការបញ្ជាទិញ</button>
+  </form>
+</div>
+
+<script>
+  // Link Web App របស់អ្នក
+  const API_URL = "https://script.google.com/macros/s/AKfycbzlEk5qZug_emMiHCyqNcFZryBoO-SnOceSFMlUvyFNSF1nSHV7xUnMavT1v7PwxOce3w/exec";
+
+  function toggleZoneInput() {
+    const game = document.getElementById("game").value;
+    document.getElementById("zoneGroup").style.display = (game === "Mobile Legends") ? "block" : "none";
+  }
+
+  document.getElementById("topupForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const btn = document.getElementById("submitBtn");
+    btn.innerText = "កំពុងផ្ញើ...";
+    btn.disabled = true;
+
+    const payload = {
+      game: document.getElementById("game").value,
+      playerId: document.getElementById("playerId").value,
+      zoneId: document.getElementById("zoneId").value,
+      itemName: document.getElementById("item").value,
+      phone: document.getElementById("phone").value
+    };
+
+    fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+      alert("✅ ការបញ្ជាទិញត្រូវបានផ្ញើជោគជ័យ! យើងខ្ញុំនឹងពិនិត្យ និងបញ្ចូលជូនឆាប់ៗ។");
+      document.getElementById("topupForm").reset();
+      btn.innerText = "ផ្ញើការបញ្ជាទិញ";
+      btn.disabled = false;
+    })
+    .catch(err => {
+      alert("❌ មានបញ្ហា! សូមព្យាយាមម្តងទៀត។");
+      btn.innerText = "ផ្ញើការបញ្ជាទិញ";
+      btn.disabled = false;
+    });
+  });
+</script>
+
+</body>
+</html>
