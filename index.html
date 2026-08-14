@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mr' NARA Top Up - Game Top Up</title>
+    <title>Mr' NARA Top Up - Dynamic Game Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Swiper CSS សម្រាប់ Slideshow -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <script>
@@ -14,37 +13,24 @@
             theme: {
                 extend: {
                     colors: {
-                        'daddy-purple': '#fce7f3',       /* Pink Background Main */
-                        'daddy-dark-purple': '#fbcfe8',  /* Darker Pink Header/Panel */
-                        'daddy-light-purple': '#f472b6', /* Pink Border */
-                        'daddy-text-light': '#831843',   /* Dark Pink Text */
-                        'daddy-text-darker': '#9d174d',  
-                        'daddy-orange': '#ec4899',       /* Primary Pink Button */
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        'daddy-purple': '#fce7f3',
+                        'daddy-dark-purple': '#fbcfe8',
+                        'daddy-light-purple': '#f472b6',
+                        'daddy-text-light': '#831843',
+                        'daddy-text-darker': '#9d174d',
+                        'daddy-orange': '#ec4899',
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { padding: 0; margin: 0; }
         .daddy-input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            background: #ffffff;
-            border: 1px solid #f472b6;
-            color: #831843;
-            outline: none;
+            width: 100%; padding: 10px; border-radius: 5px;
+            background: #ffffff; border: 1px solid #f472b6; color: #831843; outline: none;
         }
-        .daddy-input::placeholder { color: #f472b6; }
-        
-        .swiper-pagination-bullet-active {
-            background: #ec4899 !important;
-        }
+        .swiper-pagination-bullet-active { background: #ec4899 !important; }
     </style>
 </head>
 <body class="bg-daddy-purple font-sans text-daddy-text-light min-h-screen flex flex-col">
@@ -52,39 +38,24 @@
     <!-- Header Navbar -->
     <div class="w-full mx-auto md:px-8 bg-daddy-dark-purple sticky top-0 z-50 border-b border-pink-300">
         <header class="px-4 max-w-7xl mx-auto flex items-center justify-between py-3 sm:py-4">
-            <a href="#" class="flex items-center text-lg sm:text-xl md:text-2xl font-bold gap-2 text-pink-900">
+            <a href="#" class="flex items-center text-lg sm:text-xl font-bold gap-2 text-pink-900">
                 <i class="fas fa-gamepad text-daddy-orange text-2xl"></i>
                 <span>Mr' NARA Top Up</span>
             </a>
-            <div class="flex items-center gap-2">
-                <span class="text-xs text-pink-700 font-semibold bg-pink-100 border border-pink-300 px-3 py-1 rounded-full">
-                    <i class="fab fa-telegram-plane mr-1"></i> WebApp Ready
-                </span>
-            </div>
+            <span class="text-xs text-pink-700 font-semibold bg-pink-100 border border-pink-300 px-3 py-1 rounded-full">
+                <i class="fab fa-telegram-plane mr-1"></i> WebApp Ready
+            </span>
         </header>
     </div>
 
     <!-- Main Content -->
     <main class="max-w-[1200px] mx-auto mb-10 px-4 w-full">
         
-        <!-- Banner Slideshow Section -->
+        <!-- Auto Dynamic Banner Slideshow -->
         <div class="mt-6 rounded-2xl overflow-hidden shadow-md border-2 border-pink-300">
             <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <!-- Slide 1: Free Fire Banner -->
-                    <div class="swiper-slide relative">
-                        <img src="https://daddytopup.com/storage/games/covers/01KYM1D1HXHGFN4EDMD2E0RDFB.jpeg" alt="Free Fire Banner" class="w-full h-44 sm:h-60 md:h-72 object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-pink-950/80 to-transparent text-white font-bold text-lg sm:text-xl">
-                            🔥 Free Fire Instant Top-Up
-                        </div>
-                    </div>
-                    <!-- Slide 2: Mobile Legends Banner (Link ថ្មីច្បាស់ដើរ ១០០%) -->
-                    <div class="swiper-slide relative">
-                        <img src="https://m.mobilelegends.com/static/images/index/kv_bg_m.jpg" alt="Mobile Legends Banner" class="w-full h-44 sm:h-60 md:h-72 object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-pink-950/80 to-transparent text-white font-bold text-lg sm:text-xl">
-                            ⚔️ Mobile Legends Bang Bang Diamonds
-                        </div>
-                    </div>
+                <div class="swiper-wrapper" id="banner-container">
+                    <div class="swiper-slide p-10 text-center">Loading Banners...</div>
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
@@ -92,74 +63,34 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-6">
 
-            <!-- Left Side: Packages Selection -->
+            <!-- Left Side: Dynamic Packages -->
             <section class="md:col-span-2">
                 
                 <!-- Game Tabs -->
                 <div class="flex gap-4 mb-6">
-                    <button id="tab-ff" onclick="switchGame('Free Fire')" class="flex-1 py-3 px-4 rounded-xl font-bold border-2 border-daddy-orange bg-daddy-orange text-white shadow-md flex items-center justify-center gap-2 transition">
+                    <button id="tab-ff" onclick="switchGame('Free Fire')" class="flex-1 py-3 px-4 rounded-xl font-bold border-2 border-daddy-orange bg-daddy-orange text-white shadow-md transition">
                         🔥 Free Fire
                     </button>
-                    <button id="tab-mlbb" onclick="switchGame('Mobile Legends')" class="flex-1 py-3 px-4 rounded-xl font-bold border-2 border-pink-300 bg-white text-pink-900 shadow-sm flex items-center justify-center gap-2 transition">
+                    <button id="tab-mlbb" onclick="switchGame('Mobile Legends')" class="flex-1 py-3 px-4 rounded-xl font-bold border-2 border-pink-300 bg-white text-pink-900 shadow-sm transition">
                         ⚔️ Mobile Legends
                     </button>
                 </div>
 
-                <!-- Free Fire Packages -->
-                <div id="ff-packages" class="space-y-4">
+                <div class="space-y-4">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-xl font-bold text-pink-900">កញ្ចប់ Free Fire</h2>
-                        <span class="text-xs text-white font-semibold bg-daddy-orange px-3 py-1 rounded-full">★ HOT</span>
+                        <h2 id="package-title" class="text-xl font-bold text-pink-900">កញ្ចប់ហ្គេម</h2>
+                        <span id="loading-spinner" class="text-xs text-pink-700 animate-pulse">កំពុងទាញយកទិន្នន័យ...</span>
                     </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        <div onclick="setAmount('0.70', 'Weekly Lite x2', this)" class="package-item text-center rounded-lg p-4 cursor-pointer hover:scale-105 transition-all border-2 border-transparent bg-white shadow-sm">
-                            <p class="text-lg font-bold text-daddy-orange">$0.70</p>
-                            <p class="text-sm">Weekly Lite x2</p>
-                        </div>
-                        <div onclick="setAmount('1.59', 'Weekly Pass', this)" class="package-item text-center rounded-lg p-4 cursor-pointer hover:scale-105 transition-all border-2 border-transparent bg-white shadow-sm">
-                            <p class="text-lg font-bold text-daddy-orange">$1.59</p>
-                            <p class="text-sm">Weekly Pass</p>
-                        </div>
-                        <div onclick="setAmount('7.49', 'Monthly Pass', this)" class="package-item text-center rounded-lg p-4 cursor-pointer hover:scale-105 transition-all border-2 border-transparent bg-white shadow-sm">
-                            <p class="text-lg font-bold text-daddy-orange">$7.49</p>
-                            <p class="text-sm">Monthly Pass</p>
-                        </div>
-                        <div onclick="setAmount('0.79', '100 Diamonds', this)" class="package-item text-center rounded-lg p-4 cursor-pointer hover:scale-105 transition-all border-2 border-transparent bg-white shadow-sm">
-                            <p class="text-lg font-bold text-daddy-orange">$0.79</p>
-                            <p class="text-sm">100 Diamonds</p>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Mobile Legends Packages -->
-                <div id="mlbb-packages" class="space-y-4 hidden">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-xl font-bold text-pink-900">កញ្ចប់ Mobile Legends</h2>
-                        <span class="text-xs text-white font-semibold bg-daddy-orange px-3 py-1 rounded-full">★ MLBB</span>
-                    </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        <div onclick="setAmount('1.00', '86 Diamonds', this)" class="package-item text-center rounded-lg p-4 cursor-pointer hover:scale-105 transition-all border-2 border-transparent bg-white shadow-sm">
-                            <p class="text-lg font-bold text-daddy-orange">$1.00</p>
-                            <p class="text-sm">86 Diamonds</p>
-                        </div>
-                        <div onclick="setAmount('2.00', '172 Diamonds', this)" class="package-item text-center rounded-lg p-4 cursor-pointer hover:scale-105 transition-all border-2 border-transparent bg-white shadow-sm">
-                            <p class="text-lg font-bold text-daddy-orange">$2.00</p>
-                            <p class="text-sm">172 Diamonds</p>
-                        </div>
-                        <div onclick="setAmount('3.00', '257 Diamonds', this)" class="package-item text-center rounded-lg p-4 cursor-pointer hover:scale-105 transition-all border-2 border-transparent bg-white shadow-sm">
-                            <p class="text-lg font-bold text-daddy-orange">$3.00</p>
-                            <p class="text-sm">257 Diamonds</p>
-                        </div>
-                        <div onclick="setAmount('2.20', 'Weekly Diamond Pass', this)" class="package-item text-center rounded-lg p-4 cursor-pointer hover:scale-105 transition-all border-2 border-transparent bg-white shadow-sm">
-                            <p class="text-lg font-bold text-daddy-orange">$2.20</p>
-                            <p class="text-sm">Weekly Pass</p>
-                        </div>
+                    <!-- Grid ទំនិញ Dynamic -->
+                    <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <!-- កញ្ចប់ទំនិញនឹងបង្ហាញនៅទីនេះដោយស្វ័យប្រវត្តិ -->
                     </div>
                 </div>
 
             </section>
 
-            <!-- Right Side: User Form & Checkout -->
+            <!-- Right Side: User Checkout Form -->
             <section class="md:col-span-1 space-y-6">
                 <div class="bg-white p-6 rounded-xl border border-pink-300 shadow-sm space-y-4">
                     <h3 id="game-title" class="text-xl font-bold text-pink-900">FREE FIRE</h3>
@@ -170,19 +101,19 @@
                             <input type="text" id="user_id" placeholder="បញ្ចូល Player ID" class="daddy-input" required>
                         </div>
 
-                        <!-- Zone ID for MLBB Only -->
+                        <!-- Zone ID សម្រាប់ MLBB -->
                         <div id="zone-id-container" class="hidden">
                             <label class="block text-sm font-semibold mb-2">Zone ID (MLBB)</label>
-                            <input type="text" id="zone_id" placeholder="បញ្ចូល Zone ID (ឧទាហរណ៍: 1234)" class="daddy-input">
+                            <input type="text" id="zone_id" placeholder="បញ្ចូល Zone ID" class="daddy-input">
                         </div>
 
                         <div>
-                            <h4 class="text-sm font-semibold mb-2">Choose Payment Method</h4>
+                            <h4 class="text-sm font-semibold mb-2">Payment Method</h4>
                             <div class="p-3 border border-pink-400 rounded-lg flex items-center gap-3 bg-pink-50">
                                 <i class="fas fa-qrcode text-daddy-orange text-xl"></i>
                                 <div>
                                     <p class="font-semibold text-sm">ABA KHQR</p>
-                                    <p class="text-xs text-pink-700">Pay via Cambodian bank apps</p>
+                                    <p class="text-xs text-pink-700">Scan & Pay via Banking Apps</p>
                                 </div>
                             </div>
                         </div>
@@ -202,57 +133,103 @@
         </div>
     </main>
 
-    <footer class="mt-auto p-4 border-t border-pink-300 bg-daddy-dark-purple text-center text-sm text-pink-800">
-        <p>Copyright © Mr' NARA Top Up. All Rights Reserved.</p>
-    </footer>
-
-    <!-- Swiper JS Script -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
-        var swiper = new Swiper(".mySwiper", {
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-        });
-
         const API_URL = "https://script.google.com/macros/s/AKfycbzlEk5qZug_emMiHCyqNcFZryBo-SnOceSFMlUvyFNSF1nSHV7xUnMavT1v7PwxOce3w/exec";
 
+        let allProducts = [];
         let currentGame = "Free Fire";
         let selectedPrice = "0.00";
         let selectedItemName = "";
         let activeElement = null;
+        let swiper = null;
+
+        // Fetch Dynamic Data ពី Google Sheets
+        function loadData() {
+            fetch(API_URL)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('loading-spinner').style.display = 'none';
+                
+                // 1. រៀបចំ Banners
+                renderBanners(data.banners);
+
+                // 2. រក្សាទុក និងបង្ហាញ Products
+                allProducts = data.products;
+                switchGame(currentGame);
+            })
+            .catch(err => {
+                console.error("Error loading data:", err);
+                document.getElementById('loading-spinner').innerText = "មានបញ្ហាក្នុងការទាញយកទិន្នន័យ!";
+            });
+        }
+
+        function renderBanners(banners) {
+            const container = document.getElementById('banner-container');
+            container.innerHTML = "";
+            
+            banners.forEach(b => {
+                container.innerHTML += `
+                    <div class="swiper-slide relative">
+                        <img src="${b.url}" class="w-full h-44 sm:h-60 md:h-72 object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-pink-950/80 to-transparent text-white font-bold text-lg">
+                            ${b.game} Instant Top-Up
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (swiper) swiper.destroy();
+            swiper = new Swiper(".mySwiper", {
+                loop: true,
+                autoplay: { delay: 3000, disableOnInteraction: false },
+                pagination: { el: ".swiper-pagination", clickable: true }
+            });
+        }
 
         function switchGame(game) {
             currentGame = game;
             document.getElementById('game-title').innerText = game.toUpperCase();
+            document.getElementById('package-title').innerText = "កញ្ចប់ " + game;
             
             selectedPrice = "0.00";
             selectedItemName = "";
             document.getElementById('total_price').innerText = "$0.00";
-            if (activeElement) activeElement.classList.remove('border-daddy-orange');
 
             if (game === 'Free Fire') {
-                document.getElementById('ff-packages').classList.remove('hidden');
-                document.getElementById('mlbb-packages').classList.add('hidden');
                 document.getElementById('zone-id-container').classList.add('hidden');
-                
-                document.getElementById('tab-ff').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-daddy-orange bg-daddy-orange text-white shadow-md flex items-center justify-center gap-2 transition";
-                document.getElementById('tab-mlbb').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-pink-300 bg-white text-pink-900 shadow-sm flex items-center justify-center gap-2 transition";
+                document.getElementById('tab-ff').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-daddy-orange bg-daddy-orange text-white shadow-md transition";
+                document.getElementById('tab-mlbb').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-pink-300 bg-white text-pink-900 shadow-sm transition";
             } else {
-                document.getElementById('ff-packages').classList.add('hidden');
-                document.getElementById('mlbb-packages').classList.remove('hidden');
                 document.getElementById('zone-id-container').classList.remove('hidden');
-                
-                document.getElementById('tab-mlbb').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-daddy-orange bg-daddy-orange text-white shadow-md flex items-center justify-center gap-2 transition";
-                document.getElementById('tab-ff').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-pink-300 bg-white text-pink-900 shadow-sm flex items-center justify-center gap-2 transition";
+                document.getElementById('tab-mlbb').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-daddy-orange bg-daddy-orange text-white shadow-md transition";
+                document.getElementById('tab-ff').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-pink-300 bg-white text-pink-900 shadow-sm transition";
             }
+
+            // Filter Products តាមហ្គេម
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = "";
+
+            const filtered = allProducts.filter(p => p.game === game);
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-4 text-center text-pink-700 py-6">មិនទាន់មានទំនិញក្នុងហ្គេមនេះទេ</div>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const isOut = p.stock === "outstock";
+                grid.innerHTML += `
+                    <div onclick="${isOut ? '' : `setAmount('${p.price}', '${p.name}', this)`}" 
+                         class="package-item text-center rounded-lg p-4 transition-all border-2 border-transparent bg-white shadow-sm ${isOut ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:scale-105'}">
+                        ${p.image ? `<img src="${p.image}" class="w-12 h-12 mx-auto mb-2 object-contain">` : ''}
+                        <p class="text-lg font-bold text-daddy-orange">$${p.price}</p>
+                        <p class="text-sm">${p.name}</p>
+                        ${isOut ? `<span class="text-xs text-red-500 font-bold">Out of Stock</span>` : ''}
+                    </div>
+                `;
+            });
         }
 
         function setAmount(price, name, element) {
@@ -285,8 +262,7 @@
                 game: currentGame,
                 playerId: document.getElementById('user_id').value,
                 zoneId: currentGame === "Mobile Legends" ? document.getElementById('zone_id').value : "-",
-                itemName: selectedItemName + " ($" + selectedPrice + ")",
-                phone: "Telegram WebApp User"
+                itemName: selectedItemName + " ($" + selectedPrice + ")"
             };
 
             fetch(API_URL, {
@@ -308,6 +284,9 @@
                 btn.disabled = false;
             });
         });
+
+        // ដំណើរការទាញយកទិន្នន័យពេលបើក Web
+        loadData();
     </script>
 </body>
 </html>
