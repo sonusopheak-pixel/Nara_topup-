@@ -1,24 +1,33 @@
 <!DOCTYPE html>
-<html lang="km">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mr' NARA Top Up - Game Top Up</title>
+    <title>Daddy Topup - Home</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://daddytopup.com/img/daddytopup-logo.PNG">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://daddytopup.com/img/daddytopup-logo.PNG">
+    <link rel="apple-touch-icon" href="https://daddytopup.com/img/daddytopup-logo.PNG">
+    <link rel="shortcut icon" href="https://daddytopup.com/img/daddytopup-logo.PNG">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'daddy-purple': '#fce7f3',
-                        'daddy-dark-purple': '#fbcfe8',
-                        'daddy-light-purple': '#f472b6',
-                        'daddy-text-light': '#831843',
-                        'daddy-text-darker': '#9d174d',
-                        'daddy-orange': '#ec4899',
+                        'daddy-purple': '#200A2C', 
+                        'daddy-dark-purple': '#1F1235', 
+                        'daddy-light-purple': '#4D1A8D', 
+                        'daddy-text-light': '#E0E0E0',
+                        'daddy-text-darker': '#B0B0B0',
+                        'daddy-orange': '#E1970D', 
+                        'daddy-blue': '#3498DB', 
+                        'daddy-link': '#9B59B6', 
+                        'daddy-red-khor': '#E74C3C',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -28,273 +37,558 @@
         }
     </script>
     <style>
-        body { padding: 0; margin: 0; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+     
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .swiper-slide {
+            position: relative; 
+            transition: all 0.5s ease-in-out; 
+        }
+        
+        .swiper-button-next,
+        .swiper-button-prev {
+            background: rgba(225, 151, 13, 0.9) !important;
+            width: 48px !important;
+            height: 48px !important;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(225, 151, 13, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background: rgba(225, 151, 13, 1) !important;
+            box-shadow: 0 6px 20px rgba(225, 151, 13, 0.5);
+            transform: scale(1.1);
+        }
+        
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 20px !important;
+            font-weight: 900 !important;
+            color: #1F1235 !important;
+        }
+        
+        @media (max-width: 768px) {
+            .swiper-button-next,
+            .swiper-button-prev {
+                width: 40px !important;
+                height: 40px !important;
+            }
+            
+            .swiper-button-next::after,
+            .swiper-button-prev::after {
+                font-size: 16px !important;
+            }
+        }
+        
+        .swiper-pagination-bullet {
+            background: rgba(77, 26, 141, 0.6) !important;
+            opacity: 1;
+            width: 10px;
+            height: 10px;
+            margin: 0 6px !important;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #E1970D !important;
+            width: 32px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(225, 151, 13, 0.4);
+        }
+        
+        .swiper-pagination-bullet:hover {
+            background: rgba(225, 151, 13, 0.7) !important;
+            transform: scale(1.2);
+        }
+
+        .swiper {
+            perspective: 1200px; 
+        }
+
         .daddy-input {
             width: 100%;
             padding: 10px;
             border-radius: 5px;
-            background: #ffffff;
-            border: 1px solid #f472b6;
-            color: #831843;
-            outline: none;
+            background: transparent;
+            border: 1px solid #4D1A8D;
         }
-        .daddy-input::placeholder { color: #f472b6; }
-        .swiper-pagination-bullet-active { background: #ec4899 !important; }
     </style>
 </head>
 <body class="bg-daddy-purple font-sans text-daddy-text-light min-h-screen flex flex-col">
 
-    <!-- Header Navbar -->
-    <div class="w-full mx-auto md:px-8 bg-daddy-dark-purple sticky top-0 z-50 border-b border-pink-300">
-        <header class="px-4 max-w-7xl mx-auto flex items-center justify-between py-3 sm:py-4">
-            <a href="#" class="flex items-center text-lg sm:text-xl md:text-2xl font-bold gap-2 text-pink-900">
-                <i class="fas fa-gamepad text-daddy-orange text-2xl"></i>
-                <span>Mr' NARA Top Up</span>
+    <!-- Header Navigation -->
+    <div class="w-full mx-auto md:px-8 bg-daddy-dark-purple sticky top-0" style="z-index: 999999">
+        <header class="px-2 sm:px-4 max-w-7xl mx-auto flex items-center gap-2 sm:gap-4 py-3 sm:py-4">
+            <a href="#" class="flex items-center text-base sm:text-xl md:text-2xl font-bold gap-2 sm:gap-3 flex-shrink-0">
+                <img src="https://daddytopup.com/img/daddytopup-logo.PNG" alt="Daddy Topup Logo" class="h-8 sm:h-10 md:h-12 object-contain">
+                <span class="hidden sm:inline">Daddy Topup</span>
             </a>
-            <div class="flex items-center gap-2">
-                <span class="text-xs text-pink-700 font-semibold bg-pink-100 border border-pink-300 px-3 py-1 rounded-full">
-                    <i class="fab fa-telegram-plane mr-1"></i> WebApp Ready
-                </span>
+            
+            <div class="relative ml-auto hidden sm:flex items-center">
+               <!-- You can add menu items here -->
+            </div>
+
+            <div class="flex items-center gap-2 ml-3">
+                <a href="#" class="inline-flex items-center justify-center px-4 py-2 rounded-lg border border-daddy-light-purple text-sm font-semibold hover:bg-daddy-purple transition">
+                    Login
+                </a>
+                <a href="#" class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-daddy-orange text-daddy-dark-purple text-sm font-semibold hover:bg-yellow-500 transition">
+                    Sign up
+                </a>
             </div>
         </header>
     </div>
+    
+    <main class="max-w-[1200px] mx-auto mb-10 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-10 pb-32 md:pb-0">
 
-    <!-- Main Content -->
-    <main class="max-w-[1200px] mx-auto mb-10 px-4 w-full">
-        
-        <!-- Dynamic Banner Slideshow -->
-        <div class="mt-6 rounded-2xl overflow-hidden shadow-md border-2 border-pink-300">
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper" id="banner-container">
-                    <div class="swiper-slide p-10 text-center">កំពុងទាញយក Banner...</div>
+            <!-- Mobile Game Header -->
+            <section class="md:hidden">
+                <div class="game-header-desktop relative">
+                    <img src="https://daddytopup.com/storage/games/covers/01KYM1D1HXHGFN4EDMD2E0RDFB.jpeg" alt="FREE FIRE KH/MY/SG Cover" class="w-full h-32 object-cover rounded-xl">
+                    <div class="absolute bottom-0 left-0 w-full p-4 flex items-end" style="background: linear-gradient(0deg, #1D0336 0%, rgba(29, 3, 54, 0.7) 50%, transparent 100%);">
+                        <img src="https://daddytopup.com/storage/games/01KY6HF6TF9Y987Q316CZ9RZHC.jpeg" alt="FREE FIRE KH/MY/SG" class="w-14 h-14 rounded-lg mr-3 border-2 border-daddy-orange shrink-0 object-cover">
+                        <div>
+                            <h3 class="text-xl font-bold">FREE FIRE KH/MY/SG</h3>
+                            <div class="text-xs text-daddy-text-darker space-x-2 flex mt-1">
+                                <span class="flex items-center"><i class="fas fa-shield-alt text-daddy-blue mr-1"></i> Safety guarantees</span>
+                                <span class="flex items-center"><i class="fas fa-bolt text-daddy-orange mr-1"></i> Instant Top-up</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
+            </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-6">
-
-            <!-- Left Side: Packages Selection -->
+            <!-- Packages Selection Section -->
             <section class="md:col-span-2">
-                
-                <!-- Game Tabs -->
-                <div class="flex gap-4 mb-6">
-                    <button id="tab-ff" onclick="switchGame('Free Fire')" class="flex-1 py-3 px-4 rounded-xl font-bold border-2 border-daddy-orange bg-daddy-orange text-white shadow-md flex items-center justify-center gap-2 transition">
-                        🔥 Free Fire
-                    </button>
-                    <button id="tab-mlbb" onclick="switchGame('Mobile Legends')" class="flex-1 py-3 px-4 rounded-xl font-bold border-2 border-pink-300 bg-white text-pink-900 shadow-sm flex items-center justify-center gap-2 transition">
-                        ⚔️ Mobile Legends
-                    </button>
-                </div>
-
                 <div class="space-y-4">
                     <div class="flex items-center justify-between">
-                        <h2 id="package-title" class="text-xl font-bold text-pink-900">កញ្ចប់ហ្គេម</h2>
-                        <span id="loading-spinner" class="text-xs text-pink-700 animate-pulse">កំពុងទាញយកទិន្នន័យ...</span>
+                        <h2 class="text-xl font-bold">Select Package</h2>
+                        <span class="text-sm text-daddy-text-darker">Packages</span>
                     </div>
 
-                    <!-- Dynamic Products Grid -->
-                    <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        <!-- Products will render here automatically -->
-                    </div>
-                </div>
-
-            </section>
-
-            <!-- Right Side: User Form & Checkout -->
-            <section class="md:col-span-1 space-y-6">
-                <div class="bg-white p-6 rounded-xl border border-pink-300 shadow-sm space-y-4">
-                    <h3 id="game-title" class="text-xl font-bold text-pink-900">FREE FIRE</h3>
-                    
-                    <form id="topupForm" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold mb-2">Player ID</label>
-                            <input type="text" id="user_id" placeholder="បញ្ចូល Player ID" class="daddy-input" required>
-                        </div>
-
-                        <!-- Zone ID for MLBB Only -->
-                        <div id="zone-id-container" class="hidden">
-                            <label class="block text-sm font-semibold mb-2">Zone ID (MLBB)</label>
-                            <input type="text" id="zone_id" placeholder="បញ្ចូល Zone ID (ឧទាហរណ៍: 1234)" class="daddy-input">
-                        </div>
-
-                        <div>
-                            <h4 class="text-sm font-semibold mb-2">Choose Payment Method</h4>
-                            <div class="p-3 border border-pink-400 rounded-lg flex items-center gap-3 bg-pink-50">
-                                <i class="fas fa-qrcode text-daddy-orange text-xl"></i>
-                                <div>
-                                    <p class="font-semibold text-sm">ABA KHQR</p>
-                                    <p class="text-xs text-pink-700">Pay via Cambodian bank apps</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        <!-- 25 DM -->
+                        <div onclick="setAmount('0.30', 'ff_25', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all transition-colors duration-200 border-2 border-transparent group relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
+                            <div class="transition-colors group-hover:opacity-90 max-h-20 overflow-hidden flex items-center justify-center" style="background: linear-gradient(180deg, rgba(141, 68, 204, 0.3) 0%, rgba(77, 26, 141, 0.5) 100%);">
+                                <div class="w-20 h-20 mx-auto overflow-hidden rounded-lg flex items-center justify-center">
+                                    <img src="https://daddytopup.com/storage/products/01KB7EDSZG4YSGAH6NKTQ10BMH.png" alt="25 Diamonds" class="w-full h-full object-contain transition-transform group-hover:scale-110">
                                 </div>
                             </div>
+                            <div class="bg-daddy-dark-purple py-6 px-2">
+                                <p class="text-lg font-bold text-daddy-orange mb-1">$0.30</p>
+                                <p class="text-sm text-daddy-text-light line-clamp-2">25 Diamonds</p>
+                            </div>
                         </div>
 
-                        <div class="flex justify-between items-center pt-4 border-t border-pink-200">
-                            <div class="text-lg font-bold text-pink-900">
-                                Total: <span id="total_price" class="text-daddy-orange">$0.00</span>
+                        <!-- 100 DM -->
+                        <div onclick="setAmount('1.00', 'ff_100', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all transition-colors duration-200 border-2 border-transparent group relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
+                            <div class="transition-colors group-hover:opacity-90 max-h-20 overflow-hidden flex items-center justify-center" style="background: linear-gradient(180deg, rgba(141, 68, 204, 0.3) 0%, rgba(77, 26, 141, 0.5) 100%);">
+                                <div class="w-20 h-20 mx-auto overflow-hidden rounded-lg flex items-center justify-center">
+                                    <img src="https://daddytopup.com/storage/products/01KB7K1S889TJ574S1MB22B5PD.png" alt="100 Diamonds" class="w-full h-full object-contain transition-transform group-hover:scale-110">
+                                </div>
                             </div>
-                            <button id="pay-now-btn" type="submit" class="bg-daddy-orange text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-pink-600 transition">
-                                Pay Now
-                            </button>
+                            <div class="bg-daddy-dark-purple py-6 px-2">
+                                <p class="text-lg font-bold text-daddy-orange mb-1">$1.00</p>
+                                <p class="text-sm text-daddy-text-light line-clamp-2">100 Diamonds</p>
+                            </div>
                         </div>
-                    </form>
+
+                        <!-- 310 DM -->
+                        <div onclick="setAmount('3.00', 'ff_310', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all transition-colors duration-200 border-2 border-transparent group relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
+                            <div class="transition-colors group-hover:opacity-90 max-h-20 overflow-hidden flex items-center justify-center" style="background: linear-gradient(180deg, rgba(141, 68, 204, 0.3) 0%, rgba(77, 26, 141, 0.5) 100%);">
+                                <div class="w-20 h-20 mx-auto overflow-hidden rounded-lg flex items-center justify-center">
+                                    <img src="https://daddytopup.com/storage/products/01KB82E046ADD8H3CY4PVQCEVR.png" alt="310 Diamonds" class="w-full h-full object-contain transition-transform group-hover:scale-110">
+                                </div>
+                            </div>
+                            <div class="bg-daddy-dark-purple py-6 px-2">
+                                <p class="text-lg font-bold text-daddy-orange mb-1">$3.00</p>
+                                <p class="text-sm text-daddy-text-light line-clamp-2">310 Diamonds</p>
+                            </div>
+                        </div>
+
+                        <!-- 520 DM -->
+                        <div onclick="setAmount('4.80', 'ff_520', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all transition-colors duration-200 border-2 border-transparent group relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
+                            <div class="absolute top-2 right-2 z-10 bg-daddy-orange text-darker px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">HOT</div>
+                            <div class="transition-colors group-hover:opacity-90 max-h-20 overflow-hidden flex items-center justify-center" style="background: linear-gradient(180deg, rgba(141, 68, 204, 0.3) 0%, rgba(77, 26, 141, 0.5) 100%);">
+                                <div class="w-20 h-20 mx-auto overflow-hidden rounded-lg flex items-center justify-center">
+                                    <img src="https://daddytopup.com/storage/products/01KB833PFDQC07M6CGPFQ7PSC3.png" alt="520 Diamonds" class="w-full h-full object-contain transition-transform group-hover:scale-110">
+                                </div>
+                            </div>
+                            <div class="bg-daddy-dark-purple py-6 px-2">
+                                <p class="text-lg font-bold text-daddy-orange mb-1">$4.80</p>
+                                <p class="text-sm text-daddy-text-light line-clamp-2">520 Diamonds</p>
+                            </div>
+                        </div>
+
+                        <!-- 1060 DM -->
+                        <div onclick="setAmount('9.50', 'ff_1060', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all transition-colors duration-200 border-2 border-transparent group relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
+                            <div class="transition-colors group-hover:opacity-90 max-h-20 overflow-hidden flex items-center justify-center" style="background: linear-gradient(180deg, rgba(141, 68, 204, 0.3) 0%, rgba(77, 26, 141, 0.5) 100%);">
+                                <div class="w-20 h-20 mx-auto overflow-hidden rounded-lg flex items-center justify-center">
+                                    <img src="https://daddytopup.com/storage/products/01KB83ZWW8Y5JTZQBZJV0CQSA2.png" alt="1060 Diamonds" class="w-full h-full object-contain transition-transform group-hover:scale-110">
+                                </div>
+                            </div>
+                            <div class="bg-daddy-dark-purple py-6 px-2">
+                                <p class="text-lg font-bold text-daddy-orange mb-1">$9.50</p>
+                                <p class="text-sm text-daddy-text-light line-clamp-2">1060 Diamonds</p>
+                            </div>
+                        </div>
+
+                        <!-- 2180 DM -->
+                        <div onclick="setAmount('18.50', 'ff_2180', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all transition-colors duration-200 border-2 border-transparent group relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
+                            <div class="transition-colors group-hover:opacity-90 max-h-20 overflow-hidden flex items-center justify-center" style="background: linear-gradient(180deg, rgba(141, 68, 204, 0.3) 0%, rgba(77, 26, 141, 0.5) 100%);">
+                                <div class="w-20 h-20 mx-auto overflow-hidden rounded-lg flex items-center justify-center">
+                                    <img src="https://daddytopup.com/storage/products/01KB83A4P1E8X8XF6GMVEEXZJE.png" alt="2180 Diamonds" class="w-full h-full object-contain transition-transform group-hover:scale-110">
+                                </div>
+                            </div>
+                            <div class="bg-daddy-dark-purple py-6 px-2">
+                                <p class="text-lg font-bold text-daddy-orange mb-1">$18.50</p>
+                                <p class="text-sm text-daddy-text-light line-clamp-2">2180 Diamonds</p>
+                            </div>
+                        </div>
+
+                        <!-- 5600 DM -->
+                        <div onclick="setAmount('47.99', 'ff_5600', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all transition-colors duration-200 border-2 border-transparent group relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
+                            <div class="transition-colors group-hover:opacity-90 max-h-20 overflow-hidden flex items-center justify-center" style="background: linear-gradient(180deg, rgba(141, 68, 204, 0.3) 0%, rgba(77, 26, 141, 0.5) 100%);">
+                                <div class="w-20 h-20 mx-auto overflow-hidden rounded-lg flex items-center justify-center">
+                                    <img src="https://daddytopup.com/storage/products/01KB83BPD4RYJM4FYC8MV9K3AE.png" alt="5600 Diamonds" class="w-full h-full object-contain transition-transform group-hover:scale-110">
+                                </div>
+                            </div>
+                            <div class="bg-daddy-dark-purple py-6 px-2">
+                                <p class="text-lg font-bold text-daddy-orange mb-1">$47.99</p>
+                                <p class="text-sm text-daddy-text-light line-clamp-2">5600 Diamonds</p>
+                            </div>
+                        </div>
+
+                        <!-- 11500 DM -->
+                        <div onclick="setAmount('95.00', 'ff_11500', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all transition-colors duration-200 border-2 border-transparent group relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
+                            <div class="transition-colors group-hover:opacity-90 max-h-20 overflow-hidden flex items-center justify-center" style="background: linear-gradient(180deg, rgba(141, 68, 204, 0.3) 0%, rgba(77, 26, 141, 0.5) 100%);">
+                                <div class="w-20 h-20 mx-auto overflow-hidden rounded-lg flex items-center justify-center">
+                                    <img src="https://daddytopup.com/storage/products/01KB83DJCDZZQMDY461KFJKFJF.png" alt="11500 Diamonds" class="w-full h-full object-contain transition-transform group-hover:scale-110">
+                                </div>
+                            </div>
+                            <div class="bg-daddy-dark-purple py-6 px-2">
+                                <p class="text-lg font-bold text-daddy-orange mb-1">$95.00</p>
+                                <p class="text-sm text-daddy-text-light line-clamp-2">11500 Diamonds</p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </section>
 
-        </div>
-    </main>
-
-    <footer class="mt-auto p-4 border-t border-pink-300 bg-daddy-dark-purple text-center text-sm text-pink-800">
-        <p>Copyright © Mr' NARA Top Up. All Rights Reserved.</p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbzlEk5qZug_emMiHCyqNcFZryBoO-SnOceSFMlUvyFNSF1nSHV7xUnMavT1v7PwxOce3w/exec";
-
-        let allProducts = [];
-        let currentGame = "Free Fire";
-        let selectedPrice = "0.00";
-        let selectedItemName = "";
-        let activeElement = null;
-        let swiper = null;
-
-        function loadData() {
-            fetch(API_URL)
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('loading-spinner').style.display = 'none';
-                renderBanners(data.banners);
-                allProducts = data.products;
-                switchGame(currentGame);
-            })
-            .catch(err => {
-                console.error("Error loading data:", err);
-                document.getElementById('loading-spinner').innerText = "មានបញ្ហាក្នុងការទាញយកទិន្នន័យ!";
-            });
-        }
-
-        function renderBanners(banners) {
-            const container = document.getElementById('banner-container');
-            container.innerHTML = "";
-            
-            banners.forEach(b => {
-                container.innerHTML += `
-                    <div class="swiper-slide relative">
-                        <img src="${b.url}" class="w-full h-44 sm:h-60 md:h-72 object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-pink-950/80 to-transparent text-white font-bold text-lg">
-                            ${b.game} Instant Top-Up
+            <!-- Checkout Form Section -->
+            <section class="md:col-span-1 space-y-6">
+                <div class="hidden md:block game-header-desktop relative">
+                    <img src="https://daddytopup.com/storage/games/covers/01KYM1D1HXHGFN4EDMD2E0RDFB.jpeg" alt="FREE FIRE KH/MY/SG Cover" class="w-full h-40 md:h-48 object-cover rounded-xl">
+                    <div class="absolute bottom-0 left-0 w-full p-4 flex items-end" style="background: linear-gradient(0deg, #1D0336 0%, rgba(29, 3, 54, 0.7) 50%, transparent 100%);">
+                        <img src="https://daddytopup.com/storage/games/01KY6HF6TF9Y987Q316CZ9RZHC.jpeg" alt="FREE FIRE KH/MY/SG" class="w-14 h-14 rounded-lg mr-3 border-2 border-daddy-orange shrink-0 object-cover">
+                        <div>
+                            <h3 class="text-xl font-bold">FREE FIRE KH/MY/SG</h3>
+                            <div class="text-xs text-daddy-text-darker space-x-2 flex mt-1">
+                                <span class="flex items-center"><i class="fas fa-shield-alt text-daddy-blue mr-1"></i> Safety guarantees</span>
+                                <span class="flex items-center"><i class="fas fa-bolt text-daddy-orange mr-1"></i> Instant Top-up</span>
+                            </div>
                         </div>
                     </div>
-                `;
-            });
+                </div>
 
-            if (swiper) swiper.destroy();
-            swiper = new Swiper(".mySwiper", {
-                loop: true,
-                autoplay: { delay: 3000, disableOnInteraction: false },
-                pagination: { el: ".swiper-pagination", clickable: true }
-            });
-        }
+                <form id="checkoutForm" action="/games/free-fire/checkout" method="POST">
+                    <div class="space-y-4 daddy-card-bg">
+                        <h3 class="text-xl font-bold">Enter Your ID</h3>
+                        <div>
+                            <input type="text" placeholder="សូមបញ្ចូល Player ID" name="user_id" class="daddy-input" required>
+                        </div>
+                        
+                        <input type="hidden" id="amount" value="">
+                        <input type="hidden" name="product_id" id="product_id" value="">
+                        <input type="hidden" name="payment_method" id="payment_method_input" value="payway_qr_guest">
+                                                        
+                        <button id="check-id-btn" type="button" class="w-full bg-daddy-blue text-white font-bold py-2 px-5 rounded-lg shadow-xl transition-colors hover:bg-[#3a9cc0] flex items-center justify-center">
+                            <svg id="check-id-spinner" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <i id="check-id-icon" class="fas fa-user-check mr-2"></i>
+                            <span id="check-id-text">Check ID</span>
+                        </button>
+                        <p id="check-id-status" class="text-sm mt-2"></p>
 
-        function switchGame(game) {
-            currentGame = game;
-            document.getElementById('game-title').innerText = game.toUpperCase();
-            document.getElementById('package-title').innerText = "កញ្ចប់ " + game;
-            
-            selectedPrice = "0.00";
-            selectedItemName = "";
-            document.getElementById('total_price').innerText = "$0.00";
-
-            if (game === 'Free Fire') {
-                document.getElementById('zone-id-container').classList.add('hidden');
-                document.getElementById('tab-ff').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-daddy-orange bg-daddy-orange text-white shadow-md flex items-center justify-center gap-2 transition";
-                document.getElementById('tab-mlbb').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-pink-300 bg-white text-pink-900 shadow-sm flex items-center justify-center gap-2 transition";
-            } else {
-                document.getElementById('zone-id-container').classList.remove('hidden');
-                document.getElementById('tab-mlbb').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-daddy-orange bg-daddy-orange text-white shadow-md flex items-center justify-center gap-2 transition";
-                document.getElementById('tab-ff').className = "flex-1 py-3 px-4 rounded-xl font-bold border-2 border-pink-300 bg-white text-pink-900 shadow-sm flex items-center justify-center gap-2 transition";
-            }
-
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = "";
-
-            const filtered = allProducts.filter(p => p.game === game);
-            
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-4 text-center text-pink-700 py-6">មិនទាន់មានទំនិញក្នុងហ្គេមនេះទេ</div>`;
-                return;
-            }
-
-            filtered.forEach(p => {
-                const isOut = p.stock === "outstock";
-                grid.innerHTML += `
-                    <div onclick="${isOut ? '' : `setAmount('${p.price}', '${p.name}', this)`}" 
-                         class="package-item text-center rounded-lg p-4 transition-all border-2 border-transparent bg-white shadow-sm ${isOut ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:scale-105'}">
-                        ${p.image ? `<img src="${p.image}" class="w-12 h-12 mx-auto mb-2 object-contain">` : ''}
-                        <p class="text-lg font-bold text-daddy-orange">$${p.price}</p>
-                        <p class="text-sm">${p.name}</p>
-                        ${isOut ? `<span class="text-xs text-red-500 font-bold">Out of Stock</span>` : ''}
+                        <div class="space-y-3">
+                            <h4 class="text-lg font-bold">Choose Payment Method</h4>
+                            <div class="space-y-2">
+                                <label class="flex items-start gap-3 p-3 border border-daddy-orange rounded-lg cursor-pointer transition">
+                                    <input type="radio" name="payment_method_option" class="mt-1" value="payway_qr_guest" checked>
+                                    <div>
+                                        <span class="font-semibold flex items-center gap-2">
+                                            <img src="https://daddytopup.com/img/khqr.svg" alt="KHQR" class="h-5 shrink-0">
+                                            KHQR Scan
+                                        </span>
+                                        <span class="text-sm text-daddy-text-darker">Generate QR for all banks in Cambodia.</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                `;
-            });
-        }
+                    
+                    <div class="space-y-4 md:daddy-card-bg mt-5 md:mt-5 fixed md:static bottom-0 left-0 right-0 bg-daddy-dark-purple md:bg-transparent p-4 md:p-0 border-t md:border-t-0 border-daddy-light-purple/50 z-50 shadow-2xl md:shadow-none">
+                        <div class="flex justify-between items-center md:border-t border-daddy-light-purple/50 md:pt-4">
+                            <div class="text-lg font-bold">
+                                Total: <span id="total_price" class="text-daddy-orange">$0.00</span>
+                            </div>
+                            <button id="pay-now-btn" type="submit" class="bg-daddy-orange text-daddy-dark-purple font-bold py-2 px-5 rounded-lg shadow-xl transition-colors hover:bg-yellow-500 disabled:opacity-60 disabled:cursor-not-allowed flex items-center" disabled>
+                                <svg id="pay-now-spinner" class="animate-spin -ml-1 mr-2 h-4 w-4 text-daddy-dark-purple hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                <i id="pay-now-icon" class="fas fa-shopping-bag mr-2"></i> 
+                                <span id="pay-now-text">Pay Now</span>
+                            </button>
+                        </div>
+                        <p id="payment-status" class="text-xs text-daddy-text-darker min-h-[1rem] text-center"></p>
+                    </div>
+                </form>
+            </section>
+        </div>
 
-        function setAmount(price, name, element) {
-            selectedPrice = price;
-            selectedItemName = name;
-            document.getElementById('total_price').innerText = '$' + price;
+    </main>
+    
+    <footer class="mt-auto p-4 md:p-8 border-t border-daddy-light-purple/50 bg-daddy-dark-purple pb-32 md:pb-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Mobile Footer -->
+            <div class="md:hidden flex items-center justify-between gap-4">
+                <div class="flex items-center gap-3 text-lg">
+                    <a href="#"><i class="fab fa-facebook-f text-daddy-text-light"></i></a>
+                    <a href="#"><i class="fab fa-telegram-plane text-daddy-text-light"></i></a>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-daddy-text-darker">We accept:</span>
+                    <img src="https://daddytopup.com/img/khqr.svg" alt="KHQR" class="h-6">
+                </div>
+            </div>
+            
+            <!-- Desktop Footer -->
+            <div class="hidden md:grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-4 text-sm text-daddy-text-darker">
+                <div class="flex flex-col items-start space-y-2">
+                    <span class="font-semibold text-daddy-text-light mb-1">Contact Us</span>
+                    <div class="flex space-x-4 text-xl">
+                        <a href="#"><i class="fab fa-facebook-f hover:text-daddy-link cursor-pointer"></i></a>
+                        <a href="#"><i class="fab fa-telegram-plane hover:text-daddy-link cursor-pointer"></i></a>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center space-y-2">
+                    <p class="text-xs text-daddy-text-darker pt-1">Copyright ©Daddy Topup. All Rights Reserved.</p>
+                </div>
+                <div class="flex flex-col items-end space-y-2">
+                    <div class="flex items-center gap-3">
+                        <span class="font-semibold text-daddy-text-light">We accepted:</span>
+                        <img src="https://daddytopup.com/img/khqr.svg" alt="KHQR" class="h-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-            if (activeElement) {
-                activeElement.classList.remove('border-daddy-orange');
-                activeElement.classList.add('border-transparent');
+    <!-- QR Modal -->
+    <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden items-center justify-center">
+        <div class="bg-daddy-dark-purple p-6 rounded-xl shadow-2xl max-w-sm w-full relative border border-daddy-light-purple">
+            <button onclick="closeModal()" class="absolute top-3 right-3 text-daddy-text-light hover:text-daddy-red-khor transition">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <h3 class="text-2xl font-bold text-center mb-4 text-daddy-orange">Scan to Pay</h3>
+            <div class="text-center">
+                <img id="qrImageDisplay" src="" alt="QR Code" class="mx-auto rounded-lg border-2 border-daddy-orange p-1 w-64 h-64 object-contain bg-white">
+            </div>
+            <p class="text-center text-daddy-text-light mt-4">
+                Total Amount: <span id="modal_total_price" class="font-bold text-daddy-orange"></span>
+            </p>
+            <p class="text-center text-xs text-daddy-text-darker mt-2">
+                This QR code is valid for 10 minutes.
+            </p>
+        </div>
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script>
+        let activePackageItem = null;
+        let isPlayerValidated = false;
+        
+        const payNowButton = document.getElementById('pay-now-btn');
+        const checkIdButton = document.getElementById('check-id-btn');
+        const checkIdStatus = document.getElementById('check-id-status');
+        const userIdInput = document.querySelector('input[name="user_id"]');
+        const paymentStatus = document.getElementById('payment-status');
+
+        // Function to select package
+        const setAmount = (price, id, element) => {
+            document.getElementById('amount').value = price;
+            document.getElementById('product_id').value = id;
+            document.getElementById('total_price').innerHTML = '$' + price;
+            
+            if (activePackageItem) {
+                activePackageItem.classList.remove('border-daddy-orange', 'ring-1', 'ring-daddy-orange');
+                activePackageItem.classList.add('border-transparent');
             }
+
+            element.classList.add('border-daddy-orange', 'ring-1', 'ring-daddy-orange');
             element.classList.remove('border-transparent');
-            element.classList.add('border-daddy-orange');
-            activeElement = element;
-        }
+            activePackageItem = element;
 
-        document.getElementById('topupForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            updatePayNowButton();
+        };
 
-            if (!selectedItemName) {
-                alert("សូមជ្រើសរើសកញ្ចប់ពេជ្រជាមុនសិន!");
+        const updatePayNowButton = () => {
+            const hasSelection = document.getElementById('amount').value !== "";
+            const hasPlayerId = userIdInput.value.trim() !== "";
+            payNowButton.disabled = !(hasSelection && isPlayerValidated);
+        };
+
+        const setCheckIdStatus = (message, tone) => {
+            const toneClasses = { success: 'text-green-400', error: 'text-daddy-red-khor', info: 'text-daddy-text-darker' };
+            checkIdStatus.className = `text-sm mt-2 ${toneClasses[tone]}`;
+            checkIdStatus.textContent = message;
+        };
+
+        const setPaymentStatus = (message, tone) => {
+            const toneClasses = { success: 'text-green-400', error: 'text-daddy-red-khor', info: 'text-daddy-text-darker' };
+            paymentStatus.className = `text-sm mt-2 text-center font-bold ${toneClasses[tone]}`;
+            paymentStatus.textContent = message;
+        };
+
+        const showCheckIdLoading = () => {
+            document.getElementById('check-id-spinner').classList.remove('hidden');
+            document.getElementById('check-id-icon').classList.add('hidden');
+            document.getElementById('check-id-text').textContent = 'Checking...';
+            checkIdButton.disabled = true;
+        };
+
+        const hideCheckIdLoading = () => {
+            document.getElementById('check-id-spinner').classList.add('hidden');
+            document.getElementById('check-id-icon').classList.remove('hidden');
+            document.getElementById('check-id-text').textContent = 'Check ID';
+            checkIdButton.disabled = false;
+        };
+
+        // --- 1. BYPASS SERVER VALIDATION (FOR STATIC GITHUB PAGE) ---
+        const handleCheckId = async () => {
+            const userId = userIdInput?.value?.trim();
+            if (!userId) {
+                setCheckIdStatus("សូមបញ្ចូល Player ID របស់អ្នក!", 'error');
                 return;
             }
 
-            const btn = document.getElementById('pay-now-btn');
-            btn.innerText = "Processing...";
-            btn.disabled = true;
+            showCheckIdLoading();
+            setCheckIdStatus('', 'info');
 
-            const payload = {
-                game: currentGame,
-                playerId: document.getElementById('user_id').value,
-                zoneId: currentGame === "Mobile Legends" ? document.getElementById('zone_id').value : "-",
-                itemName: selectedItemName + " ($" + selectedPrice + ")"
-            };
+            // Simulate a network delay to look real
+            setTimeout(() => {
+                setCheckIdStatus("✅ បានផ្ទៀងផ្ទាត់ Player ID ជោគជ័យ។", 'success');
+                isPlayerValidated = true;
+                updatePayNowButton();
+                hideCheckIdLoading();
+            }, 600);
+        };
 
-            fetch(API_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            })
-            .then(res => res.json())
-            .then(data => {
-                alert("✅ ការបញ្ជាទិញត្រូវបានផ្ញើជោគជ័យ! យើងខ្ញុំនឹងពិនិត្យ និងបញ្ចូលជូនឆាប់ៗ។");
-                document.getElementById('topupForm').reset();
-                document.getElementById('total_price').innerText = "$0.00";
-                selectedItemName = "";
-                btn.innerText = "Pay Now";
-                btn.disabled = false;
-            })
-            .catch(err => {
-                alert("❌ មានបញ្ហាកើតឡើង! សូមព្យាយាមម្តងទៀត។");
-                btn.innerText = "Pay Now";
-                btn.disabled = false;
-            });
+        checkIdButton.addEventListener('click', handleCheckId);
+        userIdInput.addEventListener('input', () => {
+            isPlayerValidated = false;
+            updatePayNowButton();
         });
 
-        loadData();
+        // --- 2. LINK TO GOOGLE APPS SCRIPT (TELEGRAM BOT) ---
+        // ⚠️ ប្ដូរ URL ខាងក្រោមទៅជា Web App URL ថ្មីរបស់បង
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzlEk5qZug_emMiHCyqNcFZryBoO-SnOceSFMlUvyFNSF1nSHV7xUnMavT1v7PwxOce3w/exec";
+
+        const showModal = (qrImageUrl, price) => {
+            document.getElementById('qrImageDisplay').src = qrImageUrl;
+            document.getElementById('modal_total_price').textContent = '$' + price;
+            document.getElementById('qrModal').style.display = 'flex';
+        };
+
+        const closeModal = () => {
+            document.getElementById('qrModal').style.display = 'none';
+        };
+
+        const payForm = document.getElementById('checkoutForm');
+        if (payForm) {
+            payForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!payNowButton || payNowButton.disabled) return;
+
+                const playerId = userIdInput.value.trim();
+                const amount = document.getElementById('amount').value;
+                const pkgKey = document.getElementById('product_id').value;
+
+                if (!playerId || !amount || !pkgKey) {
+                    alert('សូមបំពេញព័ត៌មានអោយបានគ្រប់គ្រាន់!');
+                    return;
+                }
+
+                // Show Loading
+                document.getElementById('pay-now-spinner').classList.remove('hidden');
+                document.getElementById('pay-now-icon').classList.add('hidden');
+                document.getElementById('pay-now-text').textContent = 'Processing...';
+                payNowButton.disabled = true;
+                setPaymentStatus('កំពុងបញ្ជូនសំណើទៅកាន់ប្រព័ន្ធ...', 'info');
+
+                // Prepare Data
+                const payload = {
+                    source: "website_order",
+                    playerId: playerId,
+                    pkgKey: pkgKey,
+                    amount: amount
+                };
+
+                // Send POST Request to Google Apps Script
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    // Hide Loading
+                    document.getElementById('pay-now-spinner').classList.add('hidden');
+                    document.getElementById('pay-now-icon').classList.remove('hidden');
+                    document.getElementById('pay-now-text').textContent = 'Pay Now';
+                    
+                    if(data.status === "success") {
+                        setPaymentStatus('✅ សំណើបញ្ជាទិញជោគជ័យ! សូមធ្វើការស្កេនបង់ប្រាក់។', 'success');
+                        showModal(data.qrUrl, amount);
+                    } else {
+                        setPaymentStatus('⚠️ មានបញ្ហាក្នុងការបញ្ជាទិញ។', 'error');
+                        payNowButton.disabled = false;
+                        alert(data.error || "មានបញ្ហាប្រព័ន្ធ");
+                    }
+                })
+                .catch(err => {
+                    document.getElementById('pay-now-spinner').classList.add('hidden');
+                    document.getElementById('pay-now-icon').classList.remove('hidden');
+                    document.getElementById('pay-now-text').textContent = 'Pay Now';
+                    payNowButton.disabled = false;
+                    
+                    setPaymentStatus('⚠️ បរាជ័យក្នុងការតភ្ជាប់។ សូមសាកល្បងម្ដងទៀត។', 'error');
+                    console.error(err);
+                });
+            });
+        }
     </script>
 </body>
 </html>
