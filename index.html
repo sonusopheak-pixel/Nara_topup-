@@ -1,305 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="km">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mr'NARA Top Up- Home</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="https://daddytopup.com/img/daddytopup-logo.PNG">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'daddy-purple': '#200A2C', 
-                        'daddy-dark-purple': '#1F1235', 
-                        'daddy-light-purple': '#4D1A8D', 
-                        'daddy-text-light': '#E0E0E0',
-                        'daddy-text-darker': '#B0B0B0',
-                        'daddy-orange': '#E1970D', 
-                        'daddy-blue': '#3498DB', 
-                        'daddy-red-khor': '#E74C3C',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { padding: 0; margin: 0; font-family: 'Inter', sans-serif; }
-        .daddy-input { width: 100%; padding: 10px; border-radius: 5px; background: transparent; border: 1px solid #4D1A8D; color: #fff;}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ផ្ទៀងផ្ទាត់គណនី</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    * { box-sizing: border-box; font-family: "Khmer OS", -apple-system, sans-serif; }
+    body { background-color: #ffffff; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 80vh; }
+    .container { text-align: center; width: 100%; max-width: 380px; }
+    h2 { color: #000; font-size: 20px; margin-bottom: 10px; font-weight: bold; }
+    p { color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+    input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1.5px solid #dddfe2; border-radius: 10px; font-size: 16px; outline: none; text-align: center;}
+    input:focus { border-color: #0088cc; }
+    button { width: 100%; padding: 14px; background-color: #0088cc; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+    button:disabled { background-color: #a0cde6; }
+    #status { margin-top: 15px; font-size: 14px; font-weight: bold; }
+    #step2 { display: none; }
+  </style>
 </head>
-<body class="bg-daddy-purple font-sans text-daddy-text-light min-h-screen flex flex-col">
-
-    <div class="w-full mx-auto md:px-8 bg-daddy-dark-purple sticky top-0" style="z-index: 50">
-        <header class="px-2 sm:px-4 max-w-7xl mx-auto flex items-center gap-2 sm:gap-4 py-3 sm:py-4">
-            <a href="#" class="flex items-center text-base sm:text-xl md:text-2xl font-bold gap-2 sm:gap-3">
-                <img src="https://daddytopup.com/img/daddytopup-logo.PNG" alt="Daddy Topup Logo" class="h-8 sm:h-10 md:h-12 object-contain">
-                <span class="hidden sm:inline">Mr'NARA TOP UP</span>
-            </a>
-            <div class="ml-auto flex items-center text-sm font-semibold">
-               <span id="promo-banner" class="text-daddy-orange"></span>
-            </div>
-        </header>
+<body>
+  <div class="container">
+    <h2>🔒 ផ្ទៀងផ្ទាត់សុវត្ថិភាព</h2>
+    <div id="step1">
+      <p>សូមបញ្ចូល Gmail របស់អ្នក។ ប្រព័ន្ធនឹងផ្ញើលេខកូដ 6 ខ្ទង់ ទៅកាន់ Inbox របស់អ្នក។</p>
+      <input type="email" id="email" placeholder="បញ្ចូល Gmail របស់អ្នក">
+      <button id="btn1" onclick="sendOtp()">ផ្ញើលេខកូដ (OTP)</button>
     </div>
-    
-    <main class="max-w-[1200px] mx-auto mb-10 px-4 w-full">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-10 pb-32 md:pb-0">
-
-            <section class="md:col-span-2">
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-xl font-bold">Select Package</h2>
-                        <span class="text-sm text-daddy-text-darker">Packages</span>
-                    </div>
-
-                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                        
-                        <div onclick="setAmount('0.30', 'ff_25', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all border-2 border-transparent relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
-                            <div class="h-20 flex items-center justify-center bg-daddy-light-purple/30">
-                                <img src="https://daddytopup.com/storage/products/01KB7EDSZG4YSGAH6NKTQ10BMH.png" class="w-16 h-16 object-contain">
-                            </div>
-                            <div class="bg-daddy-dark-purple py-4 px-2">
-                                <p class="text-lg font-bold text-daddy-orange mb-1">$0.30</p>
-                                <p class="text-sm text-daddy-text-light">25 Diamonds</p>
-                            </div>
-                        </div>
-
-                        <div onclick="setAmount('1.00', 'ff_100', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all border-2 border-transparent relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
-                            <div class="h-20 flex items-center justify-center bg-daddy-light-purple/30">
-                                <img src="https://daddytopup.com/storage/products/01KB7K1S889TJ574S1MB22B5PD.png" class="w-16 h-16 object-contain">
-                            </div>
-                            <div class="bg-daddy-dark-purple py-4 px-2">
-                                <p class="text-lg font-bold text-daddy-orange mb-1">$1.00</p>
-                                <p class="text-sm text-daddy-text-light">100 Diamonds</p>
-                            </div>
-                        </div>
-
-                        <div onclick="setAmount('3.00', 'ff_310', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all border-2 border-transparent relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
-                            <div class="h-20 flex items-center justify-center bg-daddy-light-purple/30">
-                                <img src="https://daddytopup.com/storage/products/01KB82E046ADD8H3CY4PVQCEVR.png" class="w-16 h-16 object-contain">
-                            </div>
-                            <div class="bg-daddy-dark-purple py-4 px-2">
-                                <p class="text-lg font-bold text-daddy-orange mb-1">$3.00</p>
-                                <p class="text-sm text-daddy-text-light">310 Diamonds</p>
-                            </div>
-                        </div>
-
-                        <div onclick="setAmount('4.80', 'ff_520', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all border-2 border-transparent relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
-                            <div class="absolute top-2 right-2 bg-daddy-orange text-darker px-2 py-1 rounded-full text-xs font-bold shadow-lg">HOT</div>
-                            <div class="h-20 flex items-center justify-center bg-daddy-light-purple/30">
-                                <img src="https://daddytopup.com/storage/products/01KB833PFDQC07M6CGPFQ7PSC3.png" class="w-16 h-16 object-contain">
-                            </div>
-                            <div class="bg-daddy-dark-purple py-4 px-2">
-                                <p class="text-lg font-bold text-daddy-orange mb-1">$4.80</p>
-                                <p class="text-sm text-daddy-text-light">520 Diamonds</p>
-                            </div>
-                        </div>
-
-                        <div onclick="setAmount('9.50', 'ff_1060', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all border-2 border-transparent relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
-                            <div class="h-20 flex items-center justify-center bg-daddy-light-purple/30">
-                                <img src="https://daddytopup.com/storage/products/01KB83ZWW8Y5JTZQBZJV0CQSA2.png" class="w-16 h-16 object-contain">
-                            </div>
-                            <div class="bg-daddy-dark-purple py-4 px-2">
-                                <p class="text-lg font-bold text-daddy-orange mb-1">$9.50</p>
-                                <p class="text-sm text-daddy-text-light">1060 Diamonds</p>
-                            </div>
-                        </div>
-
-                        <div onclick="setAmount('18.50', 'ff_2180', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all border-2 border-transparent relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
-                            <div class="h-20 flex items-center justify-center bg-daddy-light-purple/30">
-                                <img src="https://daddytopup.com/storage/products/01KB83A4P1E8X8XF6GMVEEXZJE.png" class="w-16 h-16 object-contain">
-                            </div>
-                            <div class="bg-daddy-dark-purple py-4 px-2">
-                                <p class="text-lg font-bold text-daddy-orange mb-1">$18.50</p>
-                                <p class="text-sm text-daddy-text-light">2180 Diamonds</p>
-                            </div>
-                        </div>
-
-                        <div onclick="setAmount('47.99', 'ff_5600', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all border-2 border-transparent relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
-                            <div class="h-20 flex items-center justify-center bg-daddy-light-purple/30">
-                                <img src="https://daddytopup.com/storage/products/01KB83BPD4RYJM4FYC8MV9K3AE.png" class="w-16 h-16 object-contain">
-                            </div>
-                            <div class="bg-daddy-dark-purple py-4 px-2">
-                                <p class="text-lg font-bold text-daddy-orange mb-1">$47.99</p>
-                                <p class="text-sm text-daddy-text-light">5600 Diamonds</p>
-                            </div>
-                        </div>
-
-                        <div onclick="setAmount('95.00', 'ff_11500', this)" class="package-item text-center rounded-lg overflow-hidden cursor-pointer hover:shadow-lg hover:scale-105 transition-all border-2 border-transparent relative" style="background: linear-gradient(180deg, #4D1A8D 0%, #2A054D 100%);">
-                            <div class="h-20 flex items-center justify-center bg-daddy-light-purple/30">
-                                <img src="https://daddytopup.com/storage/products/01KB83DJCDZZQMDY461KFJKFJF.png" class="w-16 h-16 object-contain">
-                            </div>
-                            <div class="bg-daddy-dark-purple py-4 px-2">
-                                <p class="text-lg font-bold text-daddy-orange mb-1">$95.00</p>
-                                <p class="text-sm text-daddy-text-light">11500 Diamonds</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-
-            <section class="md:col-span-1 space-y-6">
-                <form id="checkoutForm">
-                    <div class="space-y-4 bg-daddy-dark-purple p-6 rounded-xl border border-daddy-light-purple">
-                        <h3 class="text-xl font-bold">Enter Your ID</h3>
-                        <div>
-                            <input type="text" id="user_id" placeholder="សូមបញ្ចូល Player ID" class="daddy-input" required>
-                        </div>
-                        
-                        <input type="hidden" id="amount" value="">
-                        <input type="hidden" id="product_id" value="">
-                        
-                        <div class="space-y-3 mt-4">
-                            <h4 class="text-lg font-bold">Payment Method</h4>
-                            <label class="flex items-center gap-3 p-3 border border-daddy-orange rounded-lg">
-                                <img src="https://daddytopup.com/img/khqr.svg" alt="KHQR" class="h-5">
-                                <span class="font-semibold">KHQR Scan</span>
-                            </label>
-                        </div>
-
-                        <div class="border-t border-daddy-light-purple mt-4 pt-4 flex justify-between items-center">
-                            <div class="text-lg font-bold">
-                                Total: <span id="total_price" class="text-daddy-orange">$0.00</span>
-                            </div>
-                            <button id="pay-now-btn" type="submit" class="bg-daddy-orange text-daddy-dark-purple font-bold py-2 px-5 rounded-lg hover:bg-yellow-500 disabled:opacity-50" disabled>
-                                Pay Now
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </section>
-        </div>
-    </main>
-
-    <!-- QR Modal with Receipt Upload -->
-    <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-80 z-[100] hidden items-center justify-center">
-        <div class="bg-daddy-dark-purple p-6 rounded-xl shadow-2xl max-w-sm w-full relative border border-daddy-light-purple">
-            <button onclick="closeModal()" class="absolute top-3 right-3 text-daddy-text-light hover:text-daddy-red-khor text-xl"><i class="fas fa-times"></i></button>
-            <h3 class="text-xl font-bold text-center mb-4 text-daddy-orange">Scan to Pay</h3>
-            
-            <div class="text-center bg-white p-2 rounded-lg mx-auto w-48 h-48 flex items-center justify-center mb-4">
-                <img id="qrImageDisplay" src="" class="max-w-full max-h-full object-contain">
-            </div>
-
-            <p class="text-center font-bold text-lg mb-4 text-daddy-orange">Amount: <span id="modal_total_price"></span></p>
-
-            <div class="border-t border-daddy-light-purple pt-4 mt-2">
-                <label class="block text-sm font-semibold mb-2">Upload Receipt (រូបភាពវិក្កយបត្រ)</label>
-                <input type="file" id="receiptUpload" accept="image/*" class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-daddy-light-purple file:text-white hover:file:bg-daddy-purple mb-4">
-                
-                <button id="submitReceiptBtn" class="w-full bg-daddy-blue text-white font-bold py-2 rounded-lg hover:bg-[#3a9cc0] transition">
-                    <span id="submit-btn-text">Confirm Payment</span>
-                </button>
-            </div>
-        </div>
+    <div id="step2">
+      <p style="color: #2e7d32;">លេខកូដត្រូវបានផ្ញើទៅ Gmail ហើយ! សូមយកលេខ 6 ខ្ទង់មកបញ្ចូលទីនេះ។</p>
+      <input type="number" id="otp" placeholder="បញ្ចូលលេខកូដ 6 ខ្ទង់">
+      <button id="btn2" onclick="verifyOtp()">ផ្ទៀងផ្ទាត់កូដ</button>
     </div>
+    <div id="status"></div>
+  </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // ⚠️ ប្ដូរ URL នេះទៅជា Web App URL ថ្មីបំផុតរបស់បង!
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzlEk5qZug_emMiHCyqNcFZryBoO-SnOceSFMlUvyFNSF1nSHV7xUnMavT1v7PwxOce3w/exec";
+  <script>
+    window.Telegram.WebApp.ready();
+    window.Telegram.WebApp.expand();
 
-        let activeItem = null;
-        let adminQrUrl = "https://placehold.co/400x400/png?text=Loading...";
+    const urlParams = new URLSearchParams(window.location.search);
+    const chatId = urlParams.get('chatId');
 
-        // Fetch configs from bot when website loads
-        fetch(GOOGLE_SCRIPT_URL)
-            .then(res => res.json())
-            .then(data => {
-                if(data.qrUrl) adminQrUrl = data.qrUrl;
-                if(data.bonus && data.bonus !== "គ្មាន") {
-                    document.getElementById('promo-banner').innerHTML = `🎁 Bonus: ${data.bonus}`;
-                }
-            }).catch(e => console.error(e));
+    // 🚨 ត្រូវប្រាកដថានេះជា URL របស់ Google Apps Script របស់អ្នក
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzyX6dyHeH9jwAxmaGFv5edhUxDLlAGCIV2zpJvpslc1ubQdQOxncvpy8Ykp6viXEA7/exec";
+    var userEmail = "";
 
-        function setAmount(price, id, el) {
-            document.getElementById('amount').value = price;
-            document.getElementById('product_id').value = id;
-            document.getElementById('total_price').textContent = '$' + price;
-            
-            if (activeItem) {
-                activeItem.classList.remove('border-daddy-orange');
-                activeItem.classList.add('border-transparent');
-            }
-            el.classList.add('border-daddy-orange');
-            el.classList.remove('border-transparent');
-            activeItem = el;
+    function sendOtp() {
+      var email = document.getElementById('email').value.trim();
+      if(!email) return alert('សូមបញ្ចូល Gmail សិន');
+      
+      document.getElementById('status').innerText = 'កំពុងផ្ញើកូដទៅ Gmail...';
+      document.getElementById('btn1').disabled = true;
 
-            document.getElementById('pay-now-btn').disabled = false;
-        }
+      fetch(GAS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ action: 'requestOtp', email: email })
+      }).then(res => res.text()).then(res => {
+         if (res === "SUCCESS") {
+           userEmail = email;
+           document.getElementById('step1').style.display = 'none';
+           document.getElementById('step2').style.display = 'block';
+           document.getElementById('status').innerText = '';
+         } else {
+           document.getElementById('status').innerText = res;
+           document.getElementById('status').style.color = '#d32f2f';
+           document.getElementById('btn1').disabled = false;
+         }
+      }).catch(e => {
+         document.getElementById('status').innerText = 'មានបញ្ហាក្នុងការភ្ជាប់។';
+         document.getElementById('btn1').disabled = false;
+      });
+    }
 
-        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const playerId = document.getElementById('user_id').value.trim();
-            const price = document.getElementById('amount').value;
-            
-            if (!playerId) {
-                alert("Please enter Player ID!");
-                return;
-            }
+    function verifyOtp() {
+      var otp = document.getElementById('otp').value.trim();
+      if(!otp) return;
+      
+      document.getElementById('status').innerText = 'កំពុងផ្ទៀងផ្ទាត់កូដ...';
+      document.getElementById('btn2').disabled = true;
 
-            document.getElementById('qrImageDisplay').src = adminQrUrl;
-            document.getElementById('modal_total_price').textContent = '$' + price;
-            document.getElementById('qrModal').style.display = 'flex';
-        });
-
-        function closeModal() {
-            document.getElementById('qrModal').style.display = 'none';
-        }
-
-        document.getElementById('submitReceiptBtn').addEventListener('click', function() {
-            const fileInput = document.getElementById('receiptUpload');
-            const playerId = document.getElementById('user_id').value.trim();
-            const pkgKey = document.getElementById('product_id').value;
-            const amount = document.getElementById('amount').value;
-            
-            if (!fileInput.files || fileInput.files.length === 0) {
-                alert("សូមបញ្ជូលរូបភាពវិក្កយបត្រ (Upload Receipt) ជាមុនសិន!");
-                return;
-            }
-
-            const btn = document.getElementById('submitReceiptBtn');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const base64Img = e.target.result;
-                const payload = {
-                    source: "website_order",
-                    playerId: playerId,
-                    pkgKey: pkgKey,
-                    amount: amount,
-                    receiptBase64: base64Img
-                };
-
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify(payload)
-                })
-                .then(res => res.json())
-                .then(data => {
-                    alert("✅ វិក្កយបត្របញ្ជូនជោគជ័យ! ប្រព័ន្ធកំពុងពិនិត្យ និងដាក់ពេជ្រចូលគណនីរបស់អ្នក។");
-                    closeModal();
-                    btn.disabled = false;
-                    btn.textContent = 'Confirm Payment';
-                    fileInput.value = ""; // clear file
-                })
-                .catch(err => {
-                    alert("⚠️ បរាជ័យក្នុងការភ្ជាប់។ សូមសាកល្បងម្ដងទៀត។");
-                    btn.disabled = false;
-                    btn.textContent = 'Confirm Payment';
-                });
-            };
-            
-            reader.readAsDataURL(file);
-        });
-    </script>
+      fetch(GAS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ action: 'verifyOtp', email: userEmail, otp: otp, chatId: chatId })
+      }).then(res => res.text()).then(res => {
+         document.getElementById('status').innerText = res;
+         if (res.indexOf("ជោគជ័យ") > -1) {
+            document.getElementById('status').style.color = '#2e7d32';
+            setTimeout(() => window.Telegram.WebApp.close(), 2000);
+         } else {
+            document.getElementById('status').style.color = '#d32f2f';
+            document.getElementById('btn2').disabled = false;
+         }
+      });
+    }
+  </script>
 </body>
 </html>
