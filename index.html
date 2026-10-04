@@ -61,17 +61,17 @@
 
     <div class="container">
         <div class="icon">🔒</div>
-        <h2 id="ui_title">ផ្ទៀងផ្ទាត់សុវត្ថិភាព</h2>
-        <p id="ui_desc">សូមបញ្ចូល Gmail របស់អ្នក។ ប្រព័ន្ធនឹងផ្ញើលេខកូដ 6 ខ្ទង់ទៅកាន់ Inbox របស់អ្នក។</p>
+        <h2 id="ui_title">Security Verification</h2>
+        <p id="ui_desc">Please enter your Gmail. The system will send a 6-digit code to your Inbox.</p>
         
         <div id="emailSection">
-            <input type="email" id="email" placeholder="បញ្ចូល Gmail របស់អ្នក">
-            <button id="ui_btn" onclick="requestOtp()">ផ្ញើលេខកូដ (OTP)</button>
+            <input type="email" id="email" placeholder="Enter your Gmail">
+            <button id="ui_btn" onclick="requestOtp()">Send Code (OTP)</button>
         </div>
 
         <div id="otpSection">
-            <input type="text" id="otp" placeholder="បញ្ចូលលេខកូដ 6 ខ្ទង់" maxlength="6">
-            <button id="ui_btn_verify" onclick="verifyOtp()">ផ្ទៀងផ្ទាត់ (Verify)</button>
+            <input type="text" id="otp" placeholder="Enter 6-digit OTP" maxlength="6">
+            <button id="ui_btn_verify" onclick="verifyOtp()">Verify</button>
         </div>
 
         <div id="message"></div>
@@ -89,7 +89,13 @@
         const urlParams = new URLSearchParams(window.location.search);
         const chatId = urlParams.get('chatId') || "";
         const lang = urlParams.get('lang') || 'EN';
+        const logoId = urlParams.get('logo'); // ទាញយក ID របស់ Logo ពី URL
         let userEmail = "";
+
+        // ប្រព័ន្ធប្តូរ Logo ស្វ័យប្រវត្តិពី Google Drive
+        if (logoId && logoId.trim() !== "") {
+            document.querySelector('.icon').innerHTML = '<img src="https://drive.google.com/uc?id=' + logoId + '" alt="Logo" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">';
+        }
 
         // ប្រព័ន្ធបកប្រែភាសា
         const translations = {
