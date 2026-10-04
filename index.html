@@ -50,7 +50,7 @@
         }
         button:active { background-color: #006699; }
         button:disabled { background-color: #cccccc; cursor: not-allowed; }
-        #message { margin-top: 15px; font-size: 13px; font-weight: bold; }
+        #message { margin-top: 15px; font-size: 13px; font-weight: bold; word-break: break-word; }
         .error { color: #d32f2f; }
         .success { color: #388e3c; }
         #otpSection { display: none; }
@@ -79,7 +79,7 @@
     </div>
 
     <script>
-        // 🚨 ដាក់ Link Google Apps Script Web App របស់អ្នកនៅទីនេះ 🚨
+        // 🚨 ចំណុចត្រូវកែប្រែ៖ ដូរអក្សរខ្មែរខាងក្រោម ទៅជា Link Web App URL របស់ Google Apps Script អ្នក 🚨
         const GOOGLE_SCRIPT_URL = "ដាក់_LINK_GOOGLE_SCRIPT_របស់អ្នកនៅទីនេះ";
 
         // ទាញយកទិន្នន័យពី Telegram និង URL
@@ -89,10 +89,10 @@
         const urlParams = new URLSearchParams(window.location.search);
         const chatId = urlParams.get('chatId') || "";
         const lang = urlParams.get('lang') || 'EN';
-        const logoId = urlParams.get('logo'); // ទាញយក ID របស់ Logo ពី URL
+        const logoId = urlParams.get('logo'); 
         let userEmail = "";
 
-        // 🌟 ប្រព័ន្ធប្តូរ Logo ស្វ័យប្រវត្តិពី Google Drive (កែបញ្ហាទាញរូបភាពរួចរាល់) 🌟
+        // ប្រព័ន្ធប្តូរ Logo ស្វ័យប្រវត្តិពី Google Drive (ប្រើ thumbnail ដើម្បីកុំឱ្យខូច)
         if (logoId && logoId.trim() !== "") {
             document.querySelector('.icon').innerHTML = '<img src="https://drive.google.com/thumbnail?id=' + logoId + '&sz=w150-h150" alt="Logo" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" onerror="this.outerHTML=\'🔒\'">';
         }
@@ -131,6 +131,12 @@
                 return;
             }
             
+            // ការពារការមិនទាន់បានដាក់ Link ត្រឹមត្រូវ
+            if (GOOGLE_SCRIPT_URL.includes("ដាក់_LINK_GOOGLE_SCRIPT_របស់អ្នកនៅទីនេះ")) {
+                showMessage("System Error: Google Script URL is not set in the code.", true);
+                return;
+            }
+
             userEmail = emailInput;
             const btn = document.getElementById('ui_btn');
             btn.disabled = true;
@@ -138,7 +144,10 @@
             showMessage("");
 
             fetch(`${GOOGLE_SCRIPT_URL}?action=requestOtp&email=${encodeURIComponent(userEmail)}`)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    return response.text();
+                })
                 .then(result => {
                     if (result.includes("SUCCESS")) {
                         showMessage(t.successEmail, false);
@@ -151,7 +160,7 @@
                     }
                 })
                 .catch(error => {
-                    showMessage("Error: " + error.message, true);
+                    showMessage("Error connecting to server. Make sure your Google Script URL is correct.", true);
                     btn.disabled = false;
                     btn.innerText = t.btn;
                 });
@@ -168,11 +177,14 @@
             showMessage("");
 
             fetch(`${GOOGLE_SCRIPT_URL}?action=verifyOtp&email=${encodeURIComponent(userEmail)}&otp=${encodeURIComponent(otpInput)}&chatId=${chatId}`)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) throw new Error("Network response was not ok");
+                    return response.text();
+                })
                 .then(result => {
                     if (result.includes("Success")) {
                         showMessage("✅ Verified! Please check your Telegram bot.", false);
-                        setTimeout(() => { tg.close(); }, 2000); // បិទផ្ទាំងអូតូក្រោយជោគជ័យ
+                        setTimeout(() => { tg.close(); }, 2000); 
                     } else {
                         showMessage(result, true);
                         btn.disabled = false;
@@ -180,7 +192,7 @@
                     }
                 })
                 .catch(error => {
-                    showMessage("Error: " + error.message, true);
+                    showMessage("Error connecting to server.", true);
                     btn.disabled = false;
                     btn.innerText = t.btnVerify;
                 });
