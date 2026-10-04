@@ -79,7 +79,6 @@
     </div>
 
     <script>
-        // ✅ Link ត្រូវបានកំណត់រួចរាល់ ១០០%
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyX6dyHeH9jwAxmaGFv5edhUxDLlAGCIV2zpJvpslc1ubQdQOxncvpy8Ykp6viXEA7/exec";
 
         const tg = window.Telegram.WebApp;
@@ -131,7 +130,8 @@
             btn.innerText = t.loading;
             showMessage("");
 
-            fetch(`${GOOGLE_SCRIPT_URL}?action=requestOtp&email=${encodeURIComponent(userEmail)}`)
+            // 🌟 បញ្ជូន lang ទៅកាន់ Backend ដើម្បីបកប្រែ Error
+            fetch(`${GOOGLE_SCRIPT_URL}?action=requestOtp&email=${encodeURIComponent(userEmail)}&lang=${lang}`)
                 .then(response => {
                     if (!response.ok) throw new Error("Network response was not ok");
                     return response.text();
@@ -163,7 +163,8 @@
             btn.innerText = t.loading;
             showMessage("");
 
-            fetch(`${GOOGLE_SCRIPT_URL}?action=verifyOtp&email=${encodeURIComponent(userEmail)}&otp=${encodeURIComponent(otpInput)}&chatId=${chatId}`)
+            // 🌟 បញ្ជូន lang ទៅកាន់ Backend ដើម្បីបកប្រែ Error
+            fetch(`${GOOGLE_SCRIPT_URL}?action=verifyOtp&email=${encodeURIComponent(userEmail)}&otp=${encodeURIComponent(otpInput)}&chatId=${chatId}&lang=${lang}`)
                 .then(response => {
                     if (!response.ok) throw new Error("Network response was not ok");
                     return response.text();
