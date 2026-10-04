@@ -1,101 +1,184 @@
 <!DOCTYPE html>
-<html lang="km">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ផ្ទៀងផ្ទាត់គណនី</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    * { box-sizing: border-box; font-family: "Khmer OS", -apple-system, sans-serif; }
-    body { background-color: #ffffff; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 80vh; }
-    .container { text-align: center; width: 100%; max-width: 380px; }
-    h2 { color: #000; font-size: 20px; margin-bottom: 10px; font-weight: bold; }
-    p { color: #555; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
-    input { width: 100%; padding: 14px; margin-bottom: 15px; border: 1.5px solid #dddfe2; border-radius: 10px; font-size: 16px; outline: none; text-align: center;}
-    input:focus { border-color: #0088cc; }
-    button { width: 100%; padding: 14px; background-color: #0088cc; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
-    button:disabled { background-color: #a0cde6; }
-    #status { margin-top: 15px; font-size: 14px; font-weight: bold; }
-    #step2 { display: none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Security Verification</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #f4f4f5;
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            max-width: 350px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .icon { font-size: 45px; margin-bottom: 15px; }
+        h2 { font-size: 18px; margin-bottom: 10px; color: #000; }
+        p { font-size: 13px; color: #666; margin-bottom: 25px; line-height: 1.5; }
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+            outline: none;
+        }
+        input:focus { border-color: #0088cc; }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:active { background-color: #006699; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
+        #message { margin-top: 15px; font-size: 13px; font-weight: bold; }
+        .error { color: #d32f2f; }
+        .success { color: #388e3c; }
+        #otpSection { display: none; }
+        .footer { margin-top: 25px; font-size: 11px; color: #999; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h2>🔒 ផ្ទៀងផ្ទាត់សុវត្ថិភាព</h2>
-    <div id="step1">
-      <p>សូមបញ្ចូល Gmail របស់អ្នក។ ប្រព័ន្ធនឹងផ្ញើលេខកូដ 6 ខ្ទង់ ទៅកាន់ Inbox របស់អ្នក។</p>
-      <input type="email" id="email" placeholder="បញ្ចូល Gmail របស់អ្នក">
-      <button id="btn1" onclick="sendOtp()">ផ្ញើលេខកូដ (OTP)</button>
+
+    <div class="container">
+        <div class="icon">🔒</div>
+        <h2 id="ui_title">ផ្ទៀងផ្ទាត់សុវត្ថិភាព</h2>
+        <p id="ui_desc">សូមបញ្ចូល Gmail របស់អ្នក។ ប្រព័ន្ធនឹងផ្ញើលេខកូដ 6 ខ្ទង់ទៅកាន់ Inbox របស់អ្នក។</p>
+        
+        <div id="emailSection">
+            <input type="email" id="email" placeholder="បញ្ចូល Gmail របស់អ្នក">
+            <button id="ui_btn" onclick="requestOtp()">ផ្ញើលេខកូដ (OTP)</button>
+        </div>
+
+        <div id="otpSection">
+            <input type="text" id="otp" placeholder="បញ្ចូលលេខកូដ 6 ខ្ទង់" maxlength="6">
+            <button id="ui_btn_verify" onclick="verifyOtp()">ផ្ទៀងផ្ទាត់ (Verify)</button>
+        </div>
+
+        <div id="message"></div>
+        <div class="footer">@nrprogram_bot</div>
     </div>
-    <div id="step2">
-      <p style="color: #2e7d32;">លេខកូដត្រូវបានផ្ញើទៅ Gmail ហើយ! សូមយកលេខ 6 ខ្ទង់មកបញ្ចូលទីនេះ។</p>
-      <input type="number" id="otp" placeholder="បញ្ចូលលេខកូដ 6 ខ្ទង់">
-      <button id="btn2" onclick="verifyOtp()">ផ្ទៀងផ្ទាត់កូដ</button>
-    </div>
-    <div id="status"></div>
-  </div>
 
-  <script>
-    window.Telegram.WebApp.ready();
-    window.Telegram.WebApp.expand();
+    <script>
+        // 🚨 ដាក់ Link Google Apps Script Web App របស់អ្នកនៅទីនេះ 🚨
+        const GOOGLE_SCRIPT_URL = "ដាក់_LINK_GOOGLE_SCRIPT_របស់អ្នកនៅទីនេះ";
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const chatId = urlParams.get('chatId');
+        // ទាញយកទិន្នន័យពី Telegram និង URL
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const chatId = urlParams.get('chatId') || "";
+        const lang = urlParams.get('lang') || 'EN';
+        let userEmail = "";
 
-    // 🚨 ត្រូវប្រាកដថានេះជា URL របស់ Google Apps Script របស់អ្នក
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbzyX6dyHeH9jwAxmaGFv5edhUxDLlAGCIV2zpJvpslc1ubQdQOxncvpy8Ykp6viXEA7/exec";
-    var userEmail = "";
+        // ប្រព័ន្ធបកប្រែភាសា
+        const translations = {
+            "EN": { title: "Security Verification", desc: "Please enter your Gmail. The system will send a 6-digit code to your Inbox.", placeholder: "Enter your Gmail", btn: "Send Code (OTP)", otpPlaceholder: "Enter 6-digit OTP", btnVerify: "Verify", loading: "Please wait...", successEmail: "OTP sent to your email!", errorInput: "Please enter a valid email." },
+            "CN": { title: "安全验证", desc: "请输入您的Gmail。系统将发送6位验证码到您的收件箱。", placeholder: "输入您的Gmail", btn: "发送验证码", otpPlaceholder: "输入6位验证码", btnVerify: "验证", loading: "请稍候...", successEmail: "验证码已发送！", errorInput: "请输入有效的邮箱。" },
+            "BD": { title: "নিরাপত্তা যাচাইকরণ", desc: "আপনার জিমেইল লিখুন। সিস্টেম আপনার ইনবক্সে একটি 6-সংখ্যার কোড পাঠাবে।", placeholder: "আপনার জিমেইল লিখুন", btn: "কোড পাঠান (OTP)", otpPlaceholder: "6-সংখ্যার কোড লিখুন", btnVerify: "যাচাই করুন", loading: "অনুগ্রহ করে অপেক্ষা করুন...", successEmail: "OTP ইমেইলে পাঠানো হয়েছে!", errorInput: "সঠিক ইমেইল লিখুন।" },
+            "PH": { title: "Security Verification", desc: "Mangyaring ilagay ang iyong Gmail. Magpapadala ang system ng 6-digit code sa iyong Inbox.", placeholder: "Ilagay ang iyong Gmail", btn: "Ipadala ang Code (OTP)", otpPlaceholder: "Ilagay ang 6-digit OTP", btnVerify: "I-verify", loading: "Mangyaring maghintay...", successEmail: "Naipadala ang OTP sa email!", errorInput: "Mangyaring maglagay ng valid na email." },
+            "ID": { title: "Verifikasi Keamanan", desc: "Silakan masukkan Gmail Anda. Sistem akan mengirimkan kode 6 digit ke Kotak Masuk Anda.", placeholder: "Masukkan Gmail Anda", btn: "Kirim Kode (OTP)", otpPlaceholder: "Masukkan 6 digit OTP", btnVerify: "Verifikasi", loading: "Mohon tunggu...", successEmail: "OTP terkirim ke email!", errorInput: "Masukkan email yang valid." },
+            "KH": { title: "ផ្ទៀងផ្ទាត់សុវត្ថិភាព", desc: "សូមបញ្ចូល Gmail របស់អ្នក។ ប្រព័ន្ធនឹងផ្ញើលេខកូដ 6 ខ្ទង់ទៅកាន់ Inbox របស់អ្នក។", placeholder: "បញ្ចូល Gmail របស់អ្នក", btn: "ផ្ញើលេខកូដ (OTP)", otpPlaceholder: "បញ្ចូលលេខកូដ 6 ខ្ទង់", btnVerify: "ផ្ទៀងផ្ទាត់ (Verify)", loading: "កំពុងដំណើរការ...", successEmail: "លេខកូដបានផ្ញើចូល Gmail រួចរាល់!", errorInput: "សូមបញ្ចូល Gmail ឲ្យបានត្រឹមត្រូវ។" }
+        };
 
-    function sendOtp() {
-      var email = document.getElementById('email').value.trim();
-      if(!email) return alert('សូមបញ្ចូល Gmail សិន');
-      
-      document.getElementById('status').innerText = 'កំពុងផ្ញើកូដទៅ Gmail...';
-      document.getElementById('btn1').disabled = true;
+        const t = translations[lang] || translations['EN'];
 
-      fetch(GAS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ action: 'requestOtp', email: email })
-      }).then(res => res.text()).then(res => {
-         if (res === "SUCCESS") {
-           userEmail = email;
-           document.getElementById('step1').style.display = 'none';
-           document.getElementById('step2').style.display = 'block';
-           document.getElementById('status').innerText = '';
-         } else {
-           document.getElementById('status').innerText = res;
-           document.getElementById('status').style.color = '#d32f2f';
-           document.getElementById('btn1').disabled = false;
-         }
-      }).catch(e => {
-         document.getElementById('status').innerText = 'មានបញ្ហាក្នុងការភ្ជាប់។';
-         document.getElementById('btn1').disabled = false;
-      });
-    }
+        // ប្តូរអក្សរនៅលើអេក្រង់ទៅតាមភាសា
+        document.getElementById('ui_title').innerText = t.title;
+        document.getElementById('ui_desc').innerText = t.desc;
+        document.getElementById('email').placeholder = t.placeholder;
+        document.getElementById('ui_btn').innerText = t.btn;
+        document.getElementById('otp').placeholder = t.otpPlaceholder;
+        document.getElementById('ui_btn_verify').innerText = t.btnVerify;
 
-    function verifyOtp() {
-      var otp = document.getElementById('otp').value.trim();
-      if(!otp) return;
-      
-      document.getElementById('status').innerText = 'កំពុងផ្ទៀងផ្ទាត់កូដ...';
-      document.getElementById('btn2').disabled = true;
+        function showMessage(text, isError = false) {
+            const msgEl = document.getElementById('message');
+            msgEl.innerText = text;
+            msgEl.className = isError ? 'error' : 'success';
+        }
 
-      fetch(GAS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ action: 'verifyOtp', email: userEmail, otp: otp, chatId: chatId })
-      }).then(res => res.text()).then(res => {
-         document.getElementById('status').innerText = res;
-         if (res.indexOf("ជោគជ័យ") > -1) {
-            document.getElementById('status').style.color = '#2e7d32';
-            setTimeout(() => window.Telegram.WebApp.close(), 2000);
-         } else {
-            document.getElementById('status').style.color = '#d32f2f';
-            document.getElementById('btn2').disabled = false;
-         }
-      });
-    }
-  </script>
+        // មុខងារសុំលេខកូដ (OTP)
+        function requestOtp() {
+            const emailInput = document.getElementById('email').value.trim();
+            if (!emailInput || !emailInput.includes('@')) {
+                showMessage(t.errorInput, true);
+                return;
+            }
+            
+            userEmail = emailInput;
+            const btn = document.getElementById('ui_btn');
+            btn.disabled = true;
+            btn.innerText = t.loading;
+            showMessage("");
+
+            fetch(`${GOOGLE_SCRIPT_URL}?action=requestOtp&email=${encodeURIComponent(userEmail)}`)
+                .then(response => response.text())
+                .then(result => {
+                    if (result.includes("SUCCESS")) {
+                        showMessage(t.successEmail, false);
+                        document.getElementById('emailSection').style.display = 'none';
+                        document.getElementById('otpSection').style.display = 'block';
+                    } else {
+                        showMessage(result, true);
+                        btn.disabled = false;
+                        btn.innerText = t.btn;
+                    }
+                })
+                .catch(error => {
+                    showMessage("Error: " + error.message, true);
+                    btn.disabled = false;
+                    btn.innerText = t.btn;
+                });
+        }
+
+        // មុខងារផ្ទៀងផ្ទាត់លេខកូដ
+        function verifyOtp() {
+            const otpInput = document.getElementById('otp').value.trim();
+            if (!otpInput) return;
+
+            const btn = document.getElementById('ui_btn_verify');
+            btn.disabled = true;
+            btn.innerText = t.loading;
+            showMessage("");
+
+            fetch(`${GOOGLE_SCRIPT_URL}?action=verifyOtp&email=${encodeURIComponent(userEmail)}&otp=${encodeURIComponent(otpInput)}&chatId=${chatId}`)
+                .then(response => response.text())
+                .then(result => {
+                    if (result.includes("Success")) {
+                        showMessage("✅ Verified! Please check your Telegram bot.", false);
+                        setTimeout(() => { tg.close(); }, 2000); // បិទផ្ទាំងអូតូក្រោយជោគជ័យ
+                    } else {
+                        showMessage(result, true);
+                        btn.disabled = false;
+                        btn.innerText = t.btnVerify;
+                    }
+                })
+                .catch(error => {
+                    showMessage("Error: " + error.message, true);
+                    btn.disabled = false;
+                    btn.innerText = t.btnVerify;
+                });
+        }
+    </script>
 </body>
 </html>
