@@ -79,10 +79,9 @@
     </div>
 
     <script>
-        // 🌟 Link Google Apps Script របស់អ្នកត្រូវបានដាក់បញ្ចូលរួចរាល់ 🌟
+        // ✅ Link ត្រូវបានកំណត់រួចរាល់ ១០០%
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzyX6dyHeH9jwAxmaGFv5edhUxDLlAGCIV2zpJvpslc1ubQdQOxncvpy8Ykp6viXEA7/exec";
 
-        // ទាញយកទិន្នន័យពី Telegram និង URL
         const tg = window.Telegram.WebApp;
         tg.expand();
         
@@ -92,12 +91,10 @@
         const logoId = urlParams.get('logo'); 
         let userEmail = "";
 
-        // ប្រព័ន្ធប្តូរ Logo ស្វ័យប្រវត្តិពី Google Drive
         if (logoId && logoId.trim() !== "") {
             document.querySelector('.icon').innerHTML = '<img src="https://drive.google.com/thumbnail?id=' + logoId + '&sz=w150-h150" alt="Logo" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" onerror="this.outerHTML=\'🔒\'">';
         }
 
-        // ប្រព័ន្ធបកប្រែភាសា
         const translations = {
             "EN": { title: "Security Verification", desc: "Please enter your Gmail. The system will send a 6-digit code to your Inbox.", placeholder: "Enter your Gmail", btn: "Send Code (OTP)", otpPlaceholder: "Enter 6-digit OTP", btnVerify: "Verify", loading: "Please wait...", successEmail: "OTP sent to your email!", errorInput: "Please enter a valid email." },
             "CN": { title: "安全验证", desc: "请输入您的Gmail。系统将发送6位验证码到您的收件箱。", placeholder: "输入您的Gmail", btn: "发送验证码", otpPlaceholder: "输入6位验证码", btnVerify: "验证", loading: "请稍候...", successEmail: "验证码已发送！", errorInput: "请输入有效的邮箱。" },
@@ -109,7 +106,6 @@
 
         const t = translations[lang] || translations['EN'];
 
-        // ប្តូរអក្សរនៅលើអេក្រង់ទៅតាមភាសា
         document.getElementById('ui_title').innerText = t.title;
         document.getElementById('ui_desc').innerText = t.desc;
         document.getElementById('email').placeholder = t.placeholder;
@@ -123,12 +119,10 @@
             msgEl.className = isError ? 'error' : 'success';
         }
 
-        // មុខងារសុំលេខកូដ (OTP)
         function requestOtp() {
             const emailInput = document.getElementById('email').value.trim();
             if (!emailInput || !emailInput.includes('@')) {
-                showMessage(t.errorInput, true);
-                return;
+                showMessage(t.errorInput, true); return;
             }
             
             userEmail = emailInput;
@@ -160,7 +154,6 @@
                 });
         }
 
-        // មុខងារផ្ទៀងផ្ទាត់លេខកូដ
         function verifyOtp() {
             const otpInput = document.getElementById('otp').value.trim();
             if (!otpInput) return;
