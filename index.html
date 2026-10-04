@@ -92,9 +92,9 @@
         const logoId = urlParams.get('logo'); // ទាញយក ID របស់ Logo ពី URL
         let userEmail = "";
 
-        // ប្រព័ន្ធប្តូរ Logo ស្វ័យប្រវត្តិពី Google Drive
+        // 🌟 ប្រព័ន្ធប្តូរ Logo ស្វ័យប្រវត្តិពី Google Drive (កែបញ្ហាទាញរូបភាពរួចរាល់) 🌟
         if (logoId && logoId.trim() !== "") {
-            document.querySelector('.icon').innerHTML = '<img src="https://drive.google.com/uc?id=' + logoId + '" alt="Logo" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">';
+            document.querySelector('.icon').innerHTML = '<img src="https://drive.google.com/thumbnail?id=' + logoId + '&sz=w150-h150" alt="Logo" style="width: 65px; height: 65px; border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);" onerror="this.outerHTML=\'🔒\'">';
         }
 
         // ប្រព័ន្ធបកប្រែភាសា
